@@ -32,9 +32,9 @@ public class ExcelSaga {
             statement = connection.createStatement();
             statement.setQueryTimeout(30);
             statement.executeUpdate("drop table if exists Users");
-            statement.executeUpdate("create table Users (id integer auto_increment, name varchar(50))");
+            statement.executeUpdate("create table USERS (id integer auto_increment, name varchar(50))");
             statement.executeUpdate("drop table if exists Documents");
-            statement.executeUpdate("create table Documents (id integer auto_increment, name varchar(50), location varchar(100), double filesize)");
+            statement.executeUpdate("create table DOCUMENTS (id integer auto_increment, name varchar(50), location varchar(100), double filesize)");
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 
 public class Document implements Persistency{
@@ -15,9 +16,12 @@ public class Document implements Persistency{
     boolean persisted;
     
     
-    public Document(String name)
+    public Document(String name,  String location, Double filesize )
     {
         this.name = name;
+        this.location = location;
+        this.filesize = filesize;
+        
         persisted = false;
         UnitOfWork work = Session.getSession().getUnitOfWork();
         work.registerNew(this);
@@ -55,12 +59,14 @@ public class Document implements Persistency{
     public void create()
     {
         try
-        {
-            PreparedStatement pstatement = Session.getSession().getConnection().prepareStatement("insert into person (name, address) values (? ,?)"
+        {                  
+            PreparedStatement pstatement = Session.getSession().getConnection().prepareStatement("insert into DOCUMENTS (name, location, filesize) values (? ,?, ?)"
                                                                                                     , Statement.RETURN_GENERATED_KEYS);
             pstatement.setQueryTimeout(30);
             pstatement.setString(1, this.name);
-
+            pstatement.setString(2, this.location);
+            pstatement.setDouble(3, this.filesize);
+            
             pstatement.execute();
 
             ResultSet rs = pstatement.getGeneratedKeys();
@@ -76,10 +82,12 @@ public class Document implements Persistency{
         }
     }
 
-    public static User load(Integer code)
+    public static ArrayList<Document> load(Integer code)
     {
-        User p = null;
-        String query = "select * from person where id = " + code.toString();
+        ArrayList<Document> ListDocument = new ArrayList<>();
+      
+        //retorna todos os docs de um determinado user
+        String query = "select * from DOCUMENTS where id = " + code.toString();
 
         try
         {
@@ -89,20 +97,25 @@ public class Document implements Persistency{
 
             while (rs.next())
             {
-                p = new User(rs.getString("name"));
-                p.persisted = true;
+                Document doc = new Document(rs.getString("name"), rs.getString("location"), rs.getDouble("filesize"));
+                
+                doc.persisted = true;
+                
+                ListDocument.add(doc);
+                
+                
             }
         } catch (SQLException e )
         {
             e.printStackTrace();
         }
-        return p;
+        return ListDocument;
     }
 
     @Override
     public void update()
     {
-        String query = "update person set name = ?, address = ? where id = ?";
+        String query = "update DOCUMENTS set name = ?,  location = ? , filesize= ? where id = ?";
 
         try
         {
@@ -110,7 +123,9 @@ public class Document implements Persistency{
             pstatement.setQueryTimeout(30);
 
             pstatement.setString(1, this.name);
-            pstatement.setInt(3, this.id.intValue());
+            pstatement.setString(2, this.location);
+            pstatement.setDouble(3, this.filesize);
+            pstatement.setInt(4, this.id.intValue());
 
             pstatement.executeUpdate();
 
@@ -123,7 +138,7 @@ public class Document implements Persistency{
     @Override
     public void delete()
     {
-        String query = "delete from person where id = " + this.id.toString();
+        String query = "delete from DOCUMENTS where id = " + this.id.toString();
 
         try
         {

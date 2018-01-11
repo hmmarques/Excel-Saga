@@ -42,7 +42,7 @@ public class User implements Persistency{
     {
         try
         {
-            PreparedStatement pstatement = Session.getSession().getConnection().prepareStatement("insert into person (name, address) values (? ,?)"
+            PreparedStatement pstatement = Session.getSession().getConnection().prepareStatement("insert into USERS (name) values (?)"
                                                                                                     , Statement.RETURN_GENERATED_KEYS);
             pstatement.setQueryTimeout(30);
             pstatement.setString(1, this.name);
@@ -65,7 +65,7 @@ public class User implements Persistency{
     public static User load(Integer code)
     {
         User p = null;
-        String query = "select * from person where id = " + code.toString();
+        String query = "select * from USERS where id = " + code.toString();
 
         try
         {
@@ -88,7 +88,7 @@ public class User implements Persistency{
     @Override
     public void update()
     {
-        String query = "update person set name = ?, address = ? where id = ?";
+        String query = "update USERS set name = ? where id = ?";
 
         try
         {
@@ -96,7 +96,7 @@ public class User implements Persistency{
             pstatement.setQueryTimeout(30);
 
             pstatement.setString(1, this.name);
-            pstatement.setInt(3, this.id.intValue());
+            pstatement.setInt(2, this.id.intValue());
 
             pstatement.executeUpdate();
 
@@ -109,7 +109,7 @@ public class User implements Persistency{
     @Override
     public void delete()
     {
-        String query = "delete from person where id = " + this.id.toString();
+        String query = "delete from USERS where id = " + this.id.toString();
 
         try
         {
