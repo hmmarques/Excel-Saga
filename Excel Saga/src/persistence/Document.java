@@ -60,12 +60,13 @@ public class Document implements Persistency{
     {
         try
         {                  
-            PreparedStatement pstatement = Session.getSession().getConnection().prepareStatement("insert into DOCUMENTS (name, location, filesize) values (? ,?, ?)"
+            PreparedStatement pstatement = Session.getSession().getConnection().prepareStatement("insert into DOCUMENTS (userID, name, location, filesize) values (?, ? ,?, ?)"
                                                                                                     , Statement.RETURN_GENERATED_KEYS);
             pstatement.setQueryTimeout(30);
-            pstatement.setString(1, this.name);
-            pstatement.setString(2, this.location);
-            pstatement.setDouble(3, this.filesize);
+            pstatement.setInt(1, User.getID());
+            pstatement.setString(2, this.name);
+            pstatement.setString(3, this.location);
+            pstatement.setDouble(4, this.filesize);
             
             pstatement.execute();
 
@@ -82,12 +83,12 @@ public class Document implements Persistency{
         }
     }
 
-    public static ArrayList<Document> load(Integer code)
+    public static ArrayList<Document> load(Integer userID)
     {
         ArrayList<Document> ListDocument = new ArrayList<>();
       
         //retorna todos os docs de um determinado user
-        String query = "select * from DOCUMENTS where id = " + code.toString();
+        String query = "select * from DOCUMENTS where userID = " + userID.toString();
 
         try
         {

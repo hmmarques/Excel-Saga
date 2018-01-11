@@ -6,9 +6,10 @@ import java.sql.*;
 public class User implements Persistency{
 
     private String name;
-    private Integer id;
+    private static Integer id;
     boolean persisted;
 
+    
     public User(String name)
     {
         this.name = name;
@@ -32,7 +33,7 @@ public class User implements Persistency{
         }
     }
 
-    public Integer getID()
+    public static Integer getID()
     {
         return id;
     }

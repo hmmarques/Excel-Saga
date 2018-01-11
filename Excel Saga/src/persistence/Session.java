@@ -1,7 +1,6 @@
 package persistence;    
 
 import java.sql.*;
-import java.util.logging.Logger;
 
     public class Session {
 

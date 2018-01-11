@@ -9,7 +9,4 @@ public interface Persistency
     public void update();
 
     public void delete();
-
-    @Override
-    public boolean equals(Object o);
 }
