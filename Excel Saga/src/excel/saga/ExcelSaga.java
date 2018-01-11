@@ -7,6 +7,11 @@ package excel.saga;
 
 import InterfacePackage.InterfaceSheet;
 import InterfacePackage.Login;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import persistence.Session;
+
 
 /**
  *
@@ -18,23 +23,30 @@ public class ExcelSaga {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("HelloWorld");
-        System.out.println("2020");
+
+        
+        Session session = Session.getSession();
+        Connection connection = session.getConnection();
+
+        //Create table in BD
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+            statement.executeUpdate("drop table if exists Users");
+            statement.executeUpdate("create table USERS (id integer auto_increment, name varchar(50))");
+            statement.executeUpdate("drop table if exists Documents");
+            statement.executeUpdate("create table DOCUMENTS (id integer auto_increment, name varchar(50), location varchar(100), double filesize)");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        
         boolean aux = false;
         
         Login login = new Login();
         login.show();
-        
-        /*
-         this.loginAccept = true;//metodo para validar user 
-        if(this.loginAccept){
-            InterfaceSheet face = new InterfaceSheet();
-            face.show();
-        }
-        */
-        
-        System.out.println("loool");
-        
+            
     }
     
 }
