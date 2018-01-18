@@ -11,9 +11,15 @@ package logic;
  */
 public class EqualFilter extends CellFilter{
 
-    public EqualFilter(Cell c) {
+    public EqualFilter(Cell c, String value) {
+        super();
         this.cell = c;
+        this.value = value;
     }
     
+    @Override
+    public String getValue(){
+        return "";
+    }
     
 }

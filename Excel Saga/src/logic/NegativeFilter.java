@@ -15,4 +15,8 @@ public class NegativeFilter extends CellFilter{
         this.cell = c;
     }
     
+        @Override
+    public String getValue(){
+        return "";
+    }
 }

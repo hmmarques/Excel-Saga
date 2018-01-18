@@ -11,5 +11,12 @@ package logic;
  */
 public abstract class CellFilter extends Cell{
     Cell cell;
+    String value;
+
+    public CellFilter() {
+        getFilters().add(this);
+    }
     
+    @Override
+    public abstract String getValue();
 }

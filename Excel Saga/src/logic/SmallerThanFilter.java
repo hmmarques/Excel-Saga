@@ -9,13 +9,16 @@ package logic;
  *
  * @author Sergio Cruz
  */
-public class Spreedsheet {
+public class SmallerThanFilter extends CellFilter{
     
-    Cell Matriz[][] = new Cell[100][25];
-
-    public Spreedsheet() {
-    
+    public SmallerThanFilter(Cell c, String value) {
+        super();
+        this.cell = c;
+        this.value = value;
     }
     
-    
+    @Override
+    public String getValue(){
+        return "";
+    }
 }

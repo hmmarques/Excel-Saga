@@ -5,12 +5,24 @@
  */
 package logic;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Sergio Cruz
  */
 public abstract class Cell {
+    
     String value;
+    ArrayList<CellFilter> filters;
+
+    public abstract String getValue();
+
+    public void setValue(String value) {
+        this.value = value;
+    }  
     
-    
+    public ArrayList<CellFilter> getFilters(){
+        return filters;
+    }
 }

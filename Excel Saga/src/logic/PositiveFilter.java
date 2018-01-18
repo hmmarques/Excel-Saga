@@ -14,4 +14,9 @@ public class PositiveFilter extends CellFilter{
     public PositiveFilter(Cell c) {
         this.cell = c;
     }
+    
+    @Override
+    public String getValue(){
+        return "";
+    }
 }

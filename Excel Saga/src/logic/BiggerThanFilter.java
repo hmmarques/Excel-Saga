@@ -11,8 +11,14 @@ package logic;
  */
 public class BiggerThanFilter extends CellFilter{
     
-    public BiggerThanFilter(Cell c) {
+    public BiggerThanFilter(Cell c, String value) {
+        super();
         this.cell = c;
+        this.value = value;
     }
     
+    @Override
+    public String getValue(){
+        return "";
+    }
 }

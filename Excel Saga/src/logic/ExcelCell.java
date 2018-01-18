@@ -11,18 +11,12 @@ package logic;
  */
 public class ExcelCell extends Cell{
 
+    ExcelCell(String value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }  
     
-    
-    
-    public String getValue() {
+    @Override
+    public String getValue(){
         return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    
-    
-     
+    }   
 }
