@@ -6,8 +6,6 @@
 package Controller;
 
 import java.util.ArrayList;
-import logic.Cell;
-import logic.Spreadsheet;
 
 /**
  *
@@ -32,7 +30,7 @@ public class CommandManager{
 	}
     
     
-    public void apply(Command c){  
+    public void applyCommand(Command c){  
         //sp.Do(modelo);
         RedoList.clear(); //duvida
         UndoList.add(c);

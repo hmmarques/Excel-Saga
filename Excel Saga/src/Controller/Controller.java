@@ -26,7 +26,9 @@ public class Controller {
         spreadsheet.getcell(p).setValue(value);
         
         //aqui é que deve guardar?
-       // Cmg.apply(spreadsheet);
+        //cria comando
+        Command cmd = new EditCell(p,value);
+        Cmg.applyCommand(cmd);
     }
     
     public String[][] getMatrix(){
@@ -40,7 +42,7 @@ public class Controller {
             
     public Controller(Spreadsheet spreedsheet) {
         this.spreadsheet = Spreadsheet.getSpreadsheet();
-        this.Cmg = new CommandManager();
+        this.Cmg = CommandManager.getInstance();
     }
     
     public void applyAllFilters(Position p, ArrayList<Filter> filters, ArrayList<String> values){

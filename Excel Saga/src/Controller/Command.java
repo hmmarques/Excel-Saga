@@ -12,7 +12,6 @@ package Controller;
  * @author Sergio Cruz
  */
 public interface Command {
-    public void Execute();
-    public void Redo();
+    public void Do();
     public void Undo();
 }

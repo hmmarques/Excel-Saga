@@ -5,25 +5,36 @@
  */
 package Controller;
 
+import logic.Spreadsheet;
+import utils.Position;
+
 /**
  *
  * @author Sergio Cruz
  */
 public class EditCell implements Command{
 
-    @Override
-    public void Execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    String originalvalue;
+    String value;
+    Position p;
 
+    public EditCell(Position p, String value) {
+        this.value = value;
+        this.p = p;
+    }
+    
+    
+    
     @Override
-    public void Redo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void Do() {
+         
+         this.originalvalue = Spreadsheet.getSpreadsheet().getcell(p).getValue();
+         Spreadsheet.getSpreadsheet().getcell(p).setValue(value);
     }
 
     @Override
     public void Undo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Spreadsheet.getSpreadsheet().getcell(p).setValue(originalvalue);
     }
     
     
