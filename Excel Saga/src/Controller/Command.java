@@ -5,9 +5,6 @@
  */
 package Controller;
 
-import logic.Cell;
-
-
 
 
 /**
@@ -15,6 +12,7 @@ import logic.Cell;
  * @author Sergio Cruz
  */
 public interface Command {
-    public void Redo(Cell m [][]);
-    public void Undo(Cell m [][]);
+    public void Execute();
+    public void Redo();
+    public void Undo();
 }

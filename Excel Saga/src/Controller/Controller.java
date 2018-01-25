@@ -26,7 +26,7 @@ public class Controller {
         spreadsheet.getcell(p).setValue(value);
         
         //aqui é que deve guardar?
-        Cmg.apply(spreadsheet);
+       // Cmg.apply(spreadsheet);
     }
     
     public String[][] getMatrix(){

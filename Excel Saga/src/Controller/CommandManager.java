@@ -14,38 +14,46 @@ import logic.Spreadsheet;
  * @author Sergio Cruz
  */
 public class CommandManager{
-    ArrayList<Cell [][]> UndoList = new ArrayList<>();
-    ArrayList<Cell [][]> RedoList = new ArrayList<>();
-    Cell  model[][];
+    ArrayList<Command> UndoList = new ArrayList<>();
+    ArrayList<Command> RedoList = new ArrayList<>();
+   
+    private static CommandManager CMg = null;
+    //Cell  model[][];
 
     public CommandManager() {
-        this.model = Spreadsheet.getSpreadsheet().getMatrix();
+      //  this.model = Spreadsheet.getSpreadsheet().getMatrix();
     }
     
+    public static CommandManager getInstance() {
+		if(CMg == null) {
+			CMg = new CommandManager();
+		}
+		return CMg;
+	}
     
     
-    public void apply(Spreadsheet sp){  
+    public void apply(Command c){  
         //sp.Do(modelo);
         RedoList.clear(); //duvida
-        UndoList.add(sp.getMatrix());
+        UndoList.add(c);
     }
     
-    public void Undo(Spreadsheet sp){
+    public void Undo(){
        if(!UndoList.isEmpty()){
        
-       Cell last[][] = UndoList.remove(UndoList.size() - 1);
-       sp.Undo(last);
+       Command last = UndoList.remove(UndoList.size() - 1);
+       //Command.Undo();
        RedoList.add(last);      
        }       
     }
     
     //REDO
-    public void Redo(Spreadsheet sp){
+    public void Redo(){
        if(!RedoList.isEmpty()){
        
-       Cell last[][] = RedoList.remove(RedoList.size() - 1);
-       sp.Redo(last);
-       UndoList.add(last);      
+//       Cell last[][] = RedoList.remove(RedoList.size() - 1);
+//       sp.Redo(last);
+//       UndoList.add(last);      
        }       
     }
 }
