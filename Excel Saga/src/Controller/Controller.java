@@ -20,9 +20,13 @@ import utils.Position;
 public class Controller {
     
     Spreadsheet spreadsheet;
-
+    CommandManager Cmg;
+    
     public void setCellValue(Position p, String value){
         spreadsheet.getcell(p).setValue(value);
+        
+        //aqui é que deve guardar?
+        Cmg.apply(spreadsheet);
     }
     
     public String[][] getMatrix(){
@@ -36,6 +40,7 @@ public class Controller {
             
     public Controller(Spreadsheet spreedsheet) {
         this.spreadsheet = Spreadsheet.getSpreadsheet();
+        this.Cmg = new CommandManager();
     }
     
     public void applyAllFilters(Position p, ArrayList<Filter> filters, ArrayList<String> values){

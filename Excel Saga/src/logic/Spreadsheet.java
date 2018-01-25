@@ -5,16 +5,19 @@
  */
 package logic;
 
+import Controller.Command;
 import utils.*;
 
 /**
  *
  * @author Sergio Cruz
  */
-public class Spreadsheet {
+public class Spreadsheet implements Command{
     
     Cell Matrix[][] = new Cell[Constants.N_ROWS][Constants.N_COLUMNS];
     static Spreadsheet ss;
+    
+    
     
     public Spreadsheet() {
         
@@ -42,6 +45,17 @@ public class Spreadsheet {
     }
 
     public Cell[][] getMatrix() {
+        
         return this.Matrix;
+    }
+
+    @Override
+    public void Redo(Cell[][] m) {
+        this.Matrix = m;
+    }
+
+    @Override
+    public void Undo(Cell[][] m) {
+         this.Matrix = m;
     }
 }
