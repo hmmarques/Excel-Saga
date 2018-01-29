@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import logic.Cell;
 import logic.Spreadsheet;
@@ -21,6 +22,20 @@ public class Controller {
     
     Spreadsheet spreadsheet;
     CommandManager Cmg;
+    SagaFile SFile;
+    
+    
+    public void upload(){
+    //funçao deixa escolher o ficheiro
+    
+    //OpenFile();
+    
+    //escolheu o ficheiro
+    //adapter ... e supostamente a spreadsheet fica com os dados do ficheiro carregado.
+    
+    };
+    
+    public void download(){};
     
     public void setCellValue(Position p, String value){
         spreadsheet.getcell(p).setValue(value);
@@ -43,6 +58,7 @@ public class Controller {
     public Controller(Spreadsheet spreedsheet) {
         this.spreadsheet = Spreadsheet.getSpreadsheet();
         this.Cmg = CommandManager.getInstance();
+        this.SFile = new FileAdapter();
     }
     
     public void applyAllFilters(Position p, ArrayList<Filter> filters, ArrayList<String> values){
@@ -82,4 +98,11 @@ public class Controller {
             spreadsheet.setCell(p, afterFilterCell);
         }
     }
+    
+    public File OpenFile(){
+        
+        
+        return null;
+}
+    
 }
