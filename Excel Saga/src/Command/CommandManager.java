@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Command;
 
+import Command.Command;
 import java.util.ArrayList;
 
 /**

@@ -5,8 +5,8 @@
  */
 package InterfacePackage;
 
-import Controller.FileAdapter;
-import Controller.SagaFile;
+import LoadFiles.FileAdapter;
+import LoadFiles.SagaFile;
 import java.io.File;
 
 /**

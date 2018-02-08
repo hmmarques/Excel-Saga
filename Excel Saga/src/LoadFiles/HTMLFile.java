@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package LoadFiles;
 
 import java.io.File;
 
@@ -11,6 +11,14 @@ import java.io.File;
  *
  * @author Sergio Cruz
  */
-public interface SagaFile {
-    public void readFile(File f);
+public class HTMLFile extends FileType{
+     public void ReadHTMLFile(File f){
+    
+    System.out.println("read HTMLFile !");
+    };
+
+    @Override
+    public void readFileType(File f) {
+       ReadHTMLFile(f);
+    }
 }
