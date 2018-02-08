@@ -16,7 +16,7 @@ public class Spreadsheet{
     
     Cell Matrix[][] = new Cell[Constants.N_ROWS][Constants.N_COLUMNS];
     static Spreadsheet ss;
-    
+
     
     
     public Spreadsheet() {

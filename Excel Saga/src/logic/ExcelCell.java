@@ -12,7 +12,7 @@ package logic;
 public class ExcelCell extends Cell{
 
     ExcelCell(String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.value = value;
     }  
     
     @Override
