@@ -279,6 +279,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 BTNchooseFileMouseClicked(evt);
             }
         });
+        BTNchooseFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNchooseFileActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -433,7 +438,10 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void BTNchooseFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNchooseFileMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Import Files Button Pressed");
+        
+          ChooseFile face = new ChooseFile();
+       face.show();
+    
     }//GEN-LAST:event_BTNchooseFileMouseClicked
 
     private void BTNhtmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNhtmlMouseClicked
@@ -460,6 +468,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
     });
         
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void BTNchooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNchooseFileActionPerformed
+       
+    
+    }//GEN-LAST:event_BTNchooseFileActionPerformed
 
     /**
      * @param args the command line arguments

@@ -24,9 +24,15 @@ public class FileAdapter implements SagaFile {
      
         
         
-      ft = FileType.CreateObject(f.getAbsolutePath());
+      ft = FileType.CreateObject(f.getName());
       
-      ft.readFileType(f);
+      if(ft != null){
+       ft.readFileType(f);
+      }else{
+      System.out.println("deu erro ao abrir o ficheiro!");
+      }
+      
+     
             
         
         
