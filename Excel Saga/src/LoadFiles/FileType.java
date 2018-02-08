@@ -7,6 +7,7 @@ package LoadFiles;
 
 import LoadFiles.XMLFile;
 import java.io.File;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -18,26 +19,29 @@ public abstract class FileType {
     public static FileType CreateObject(String s){
     //fabrica de objetos para saber que tipo de extencao o ficheiro e depois devolver
     //o objeto correspondente para descodificar o ficheiro para a spreadsheet
-        System.out.println(s);
      
+     int cont = 0;
+     String extention = "";
+     StringTokenizer token;
      // String[] parts = s.split(".");
       
-        
-    String extention = "xml";
+    //String[] parts = s.split(".",-1);
     
-    //System.out.println(parts[1]);
-        //split path ou caso ja receba a extensao nao sera necessario split
-        
-        if( extention.equals("xml"))
-         return new XMLFile();
-        else
-        if( extention.equals("csv"))
-         return new CSVFile();
-        else
-        if(extention.equals("html"))
-         return new HTMLFile();
-        else
-        return null;
+    token = new StringTokenizer(s, ".");
+    while (token.hasMoreTokens()) {
+        extention = token.nextToken();
+    }
+           
+    if( extention.equals("xml"))
+     return new XMLFile();
+    else
+    if( extention.equals("csv"))
+     return new CSVFile();
+    else
+    if(extention.equals("html"))
+     return new HTMLFile();
+    else
+    return null;
     }
     
     public abstract void readFileType(File f);
