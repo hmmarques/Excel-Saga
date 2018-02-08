@@ -31,8 +31,8 @@ public class CommandManager{
     
     
     public void applyCommand(Command c){  
-        //sp.Do(modelo);
-        RedoList.clear(); //duvida
+        c.Do();
+        RedoList.clear(); //duvida deixar ou nao?
         UndoList.add(c);
     }
     
@@ -40,7 +40,7 @@ public class CommandManager{
        if(!UndoList.isEmpty()){
        
        Command last = UndoList.remove(UndoList.size() - 1);
-       //Command.Undo();
+       last.Undo();
        RedoList.add(last);      
        }       
     }
@@ -49,9 +49,9 @@ public class CommandManager{
     public void Redo(){
        if(!RedoList.isEmpty()){
        
-//       Cell last[][] = RedoList.remove(RedoList.size() - 1);
-//       sp.Redo(last);
-//       UndoList.add(last);      
+       Command last = RedoList.remove(RedoList.size() - 1);
+       last.Do();
+       UndoList.add(last);      
        }       
     }
 }
