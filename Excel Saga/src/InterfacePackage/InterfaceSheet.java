@@ -5,9 +5,13 @@
  */
 package InterfacePackage;
 
+
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import Controller.Controller;
+import java.awt.event.KeyEvent;
+import javax.swing.JTable;
 
 /**
  *
@@ -18,8 +22,15 @@ public class InterfaceSheet extends javax.swing.JFrame {
     /**
      * Creates new form InterfaceSheet
      */
+    Controller c;
     public InterfaceSheet() {
         initComponents();
+        c = new Controller();
+        
+         jTable1.getModel().addTableModelListener((e) -> {
+                int row = e.getFirstRow();
+                int column = e.getColumn();    
+        });
     }
 
     /**
@@ -253,6 +264,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 jTable1MouseClicked(evt);
             }
         });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         jTextField1.setText("jTextField1");
@@ -462,7 +478,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
         public void valueChanged(ListSelectionEvent event) {
             // do some actions here, for example
             // print first column value from selected row
-            TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+           TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+           
             //JOptionPane.showMessageDialog(null,jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
         }
     });
@@ -473,6 +490,17 @@ public class InterfaceSheet extends javax.swing.JFrame {
        
     
     }//GEN-LAST:event_BTNchooseFileActionPerformed
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String teste = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
+            JOptionPane.showMessageDialog(null,teste);
+           
+        }
+               
+        
+    }//GEN-LAST:event_jTable1KeyPressed
 
     /**
      * @param args the command line arguments
@@ -507,7 +535,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 new InterfaceSheet().setVisible(true);
             }
         });
-        
+         
         
                 
        
