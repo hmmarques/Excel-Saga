@@ -30,6 +30,9 @@ public class Controller {
     SagaFile SFile;
     
     
+    public Controller(){
+        
+    }
     public void upload(){
     //funçao deixa escolher o ficheiro
     
