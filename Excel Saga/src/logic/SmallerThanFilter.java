@@ -11,14 +11,20 @@ package logic;
  */
 public class SmallerThanFilter extends CellFilter{
     
-    public SmallerThanFilter(Cell c, String value) {
+    public SmallerThanFilter(Cell c, String filterValue) {
         super();
         this.cell = c;
-        this.value = value;
+        this.filterValue = filterValue;
     }
     
     @Override
     public String getValue(){
         return "";
+    }
+    
+    
+    @Override
+    public void setValue(String value){
+        this.cell.setValue(value);
     }
 }

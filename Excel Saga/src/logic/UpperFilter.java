@@ -15,9 +15,13 @@ public class UpperFilter extends CellFilter{
         this.cell = c;
     }
     
-    
     @Override
     public String getValue(){
-        return "";
+        return cell.getValue().toUpperCase();
+    }
+    
+    @Override
+    public void setValue(String value){
+        this.cell.setValue(value);
     }
 }

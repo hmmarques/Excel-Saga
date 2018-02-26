@@ -18,11 +18,9 @@ public abstract class Cell {
 
     public abstract String getValue();
 
-    public void setValue(String value) {
-        this.value = value;
-    }  
+    public abstract void setValue(String value);  
     
-    public ArrayList<CellFilter> getFilters(){
+    /*public ArrayList<CellFilter> getFilters(){
         return filters;
-    }
+    }*/
 }

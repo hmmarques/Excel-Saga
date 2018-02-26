@@ -12,11 +12,15 @@ package logic;
 public class ExcelCell extends Cell{
 
     ExcelCell(String value) {
-        this.value = value;
     }  
     
     @Override
     public String getValue(){
         return value;
-    }   
+    }
+    
+    @Override
+    public void setValue(String value){
+        this.value = value;
+    }
 }

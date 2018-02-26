@@ -29,13 +29,13 @@ public class EditCell implements Command{
     @Override
     public void Do() {
          
-         this.originalvalue = Spreadsheet.getSpreadsheet().getcell(p).getValue();
-         Spreadsheet.getSpreadsheet().getcell(p).setValue(value);
+         this.originalvalue = Spreadsheet.getSpreadsheet().getCell(p).getValue();
+         Spreadsheet.getSpreadsheet().getCell(p).setValue(value);
     }
 
     @Override
     public void Undo() {
-        Spreadsheet.getSpreadsheet().getcell(p).setValue(originalvalue);
+        Spreadsheet.getSpreadsheet().getCell(p).setValue(originalvalue);
     }
     
     

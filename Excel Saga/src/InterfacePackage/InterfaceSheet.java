@@ -5,13 +5,14 @@
  */
 package InterfacePackage;
 
-
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import Controller.Controller;
 import java.awt.event.KeyEvent;
 import javax.swing.JTable;
+import utils.Constants;
+import utils.Position;
 
 /**
  *
@@ -19,18 +20,40 @@ import javax.swing.JTable;
  */
 public class InterfaceSheet extends javax.swing.JFrame {
 
+    private int row, column;
+    private boolean overlookTableListener;
     /**
      * Creates new form InterfaceSheet
      */
-    Controller c;
+    Controller controller;
+
     public InterfaceSheet() {
+        row = -1;
+        column = -1;
         initComponents();
-        c = new Controller();
-        
-         jTable1.getModel().addTableModelListener((e) -> {
-                int row = e.getFirstRow();
-                int column = e.getColumn();    
+        controller = new Controller();
+
+        jTable1.getModel().addTableModelListener((e) -> {
+            if (!overlookTableListener) {
+                row = e.getFirstRow();
+                column = e.getColumn();
+
+                controller.setCellValue(column, row, jTable1.getModel().getValueAt(row, column).toString());
+                TxtAreaform.setText(jTable1.getModel().getValueAt(row, column).toString());
+                overlookTableListener = false;
+            }
         });
+    }
+
+    public void updateTable() {
+        String[][] matrix = controller.getMatrix();
+
+        for (int i = 0; i < Constants.N_ROWS; i++) {
+            for (int j = 0; j < Constants.N_COLUMNS; j++) {
+                overlookTableListener = true;
+                jTable1.getModel().setValueAt(matrix[i][j], i, j);
+            }
+        }
     }
 
     /**
@@ -419,87 +442,93 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void BtnApplyFiltersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnApplyFiltersMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Botão para aplicar filtros");
+        JOptionPane.showMessageDialog(null, "Botão para aplicar filtros");
     }//GEN-LAST:event_BtnApplyFiltersMouseClicked
 
     private void JRNormalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRNormalMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Radio Normal");
+        JOptionPane.showMessageDialog(null, "Radio Normal");
     }//GEN-LAST:event_JRNormalMouseClicked
 
     private void JRFunctionalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRFunctionalMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Radio Functional");
+        JOptionPane.showMessageDialog(null, "Radio Functional");
     }//GEN-LAST:event_JRFunctionalMouseClicked
 
     private void JCBUppercaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JCBUppercaseMouseClicked
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"CheckBox Uppercase");
+        if (row != -1 || column != -1) {
+            if (JCBUppercase.isSelected()) {
+                controller.applyFilter(new Position(row, column), Constants.Filter.UPPERCASE, "");
+            } else {
+                controller.removeFilter(new Position(row, column), Constants.Filter.UPPERCASE);
+            }
+            updateTable();
+        }
     }//GEN-LAST:event_JCBUppercaseMouseClicked
 
     private void JRPositiveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRPositiveMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Radio Button Positive");
+        JOptionPane.showMessageDialog(null, "Radio Button Positive");
     }//GEN-LAST:event_JRPositiveMouseClicked
 
     private void JRNegativeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRNegativeMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Radio Button Negative");
+        JOptionPane.showMessageDialog(null, "Radio Button Negative");
     }//GEN-LAST:event_JRNegativeMouseClicked
 
     private void BTNxmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNxmlMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Xml Button Pressed");
+        JOptionPane.showMessageDialog(null, "Xml Button Pressed");
     }//GEN-LAST:event_BTNxmlMouseClicked
 
     private void BTNchooseFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNchooseFileMouseClicked
         // TODO add your handling code here:
-        
-          ChooseFile face = new ChooseFile();
-       face.show();
-    
+
+        ChooseFile face = new ChooseFile();
+        face.show();
+
     }//GEN-LAST:event_BTNchooseFileMouseClicked
 
     private void BTNhtmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNhtmlMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Html Button Pressed");
+        JOptionPane.showMessageDialog(null, "Html Button Pressed");
     }//GEN-LAST:event_BTNhtmlMouseClicked
 
     private void BTNcsvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNcsvMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Csv Button Pressed");
+        JOptionPane.showMessageDialog(null, "Csv Button Pressed");
     }//GEN-LAST:event_BTNcsvMouseClicked
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        
-       // JOptionPane.showMessageDialog(null,"x= "+jTable1.getSelectedColumn()+"   y= "+jTable1.getSelectedRow());
-        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-        public void valueChanged(ListSelectionEvent event) {
-            // do some actions here, for example
-            // print first column value from selected row
-           TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
-           
-            //JOptionPane.showMessageDialog(null,jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
-        }
-    });
-        
+
+        // JOptionPane.showMessageDialog(null,"x= "+jTable1.getSelectedColumn()+"   y= "+jTable1.getSelectedRow());
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                // do some actions here, for example
+                // print first column value from selected row
+                TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+
+                //JOptionPane.showMessageDialog(null,jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+            }
+        });
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void BTNchooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNchooseFileActionPerformed
-       
-    
+
+
     }//GEN-LAST:event_BTNchooseFileActionPerformed
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String teste = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
-            JOptionPane.showMessageDialog(null,teste);
-           
+            JOptionPane.showMessageDialog(null, teste);
+
         }
-               
-        
+
+
     }//GEN-LAST:event_jTable1KeyPressed
 
     /**
@@ -535,11 +564,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 new InterfaceSheet().setVisible(true);
             }
         });
-         
-        
-                
-       
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

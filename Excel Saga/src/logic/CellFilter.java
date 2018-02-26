@@ -10,13 +10,18 @@ package logic;
  * @author Sergio Cruz
  */
 public abstract class CellFilter extends Cell{
+    
     Cell cell;
-    String value;
+    
+    String filterValue;
 
     public CellFilter() {
-        getFilters().add(this);
+        //getFilters().add(this);
     }
     
     @Override
     public abstract String getValue();
+    
+    @Override
+    public abstract void setValue(String value);
 }

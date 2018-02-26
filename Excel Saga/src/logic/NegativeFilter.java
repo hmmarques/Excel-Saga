@@ -19,4 +19,9 @@ public class NegativeFilter extends CellFilter{
     public String getValue(){
         return "";
     }
+    
+    @Override
+    public void setValue(String value){
+        this.cell.setValue(value);
+    }
 }
