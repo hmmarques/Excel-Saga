@@ -20,8 +20,9 @@ import utils.Position;
  */
 public class InterfaceSheet extends javax.swing.JFrame {
 
-    private int row, column;
+    private int row, column, rowAux, columnAux;
     private boolean overlookTableListener;
+    private String cmdAux;
     /**
      * Creates new form InterfaceSheet
      */
@@ -30,32 +31,33 @@ public class InterfaceSheet extends javax.swing.JFrame {
     public InterfaceSheet() {
         row = -1;
         column = -1;
+        rowAux = -1;
+        columnAux = -1;
+        cmdAux = "";
         initComponents();
         controller = new Controller();
 
         jTable1.getModel().addTableModelListener((e) -> {
             if (!overlookTableListener) {
-                row = e.getFirstRow();
-                column = e.getColumn();
-
                 controller.setCellValue(column, row, jTable1.getModel().getValueAt(row, column).toString());
                 TxtAreaform.setText(jTable1.getModel().getValueAt(row, column).toString());
-                overlookTableListener = false;
             }
+            overlookTableListener = false;
         });
+        
+       
     }
 
     public void updateTable() {
         String[][] matrix = controller.getMatrix();
-        System.out.println("res = "+matrix[0][0]);
-        overlookTableListener = true;
+       // System.out.println("res = "+matrix[0][0]);
+        
         for (int i = 0; i < Constants.N_ROWS; i++) {
             for (int j = 0; j < Constants.N_COLUMNS; j++) {
-                
+                overlookTableListener = true;
                 jTable1.getModel().setValueAt(matrix[i][j], i, j);
             }
         }
-        overlookTableListener = false;
     }
 
     /**
@@ -155,8 +157,16 @@ public class InterfaceSheet extends javax.swing.JFrame {
         TxtAreaform.setColumns(20);
         TxtAreaform.setRows(5);
         TxtAreaform.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TxtAreaformFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 TxtAreaformFocusLost(evt);
+            }
+        });
+        TxtAreaform.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtAreaformMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(TxtAreaform);
@@ -289,9 +299,17 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "W", "X", "Y", "Z"
             }
         ));
+        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTable1FocusGained(evt);
+            }
+        });
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
             }
         });
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -540,9 +558,44 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void TxtAreaformFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusLost
         // TODO add your handling code here:
-        controller.setCellValue(column, row, this.TxtAreaform.getText());
+        
+        System.out.println("row: " +row);
+        System.out.println("column:" + column);
+        System.out.println("rowAux: "+rowAux);
+        System.out.println("columnAux: "+columnAux);
+        System.out.println("re: "+this.TxtAreaform.getText());
+        controller.setCellValue(columnAux, rowAux, this.TxtAreaform.getText());
         this.updateTable();
     }//GEN-LAST:event_TxtAreaformFocusLost
+
+    private void TxtAreaformFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusGained
+ 
+        
+//        this.columnAux = this.column;
+//        this.rowAux = this.row;   
+        
+    }//GEN-LAST:event_TxtAreaformFocusGained
+
+    private void TxtAreaformMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtAreaformMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtAreaformMouseClicked
+
+    private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
+        // TODO add your handling code here:
+        //System.out.println("x: "+jTable1.getSelectedRow() + "y: " + jTable1.getSelectedColumn());
+    }//GEN-LAST:event_jTable1FocusGained
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        // TODO add your handling code here:
+        this.columnAux = this.column;
+        this.rowAux = this.row;   
+        this.cmdAux = this.TxtAreaform.getText();
+        row = jTable1.getSelectedRow();
+        column = jTable1.getSelectedColumn();
+        
+
+        //System.out.println("x: "+jTable1.getSelectedRow() + "y: " + jTable1.getSelectedColumn());
+    }//GEN-LAST:event_jTable1MousePressed
 
     /**
      * @param args the command line arguments

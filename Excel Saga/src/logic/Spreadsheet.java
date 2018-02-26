@@ -51,6 +51,15 @@ public class Spreadsheet {
 
         return this.Matrix;
     }
+    
+    public void setMatriz(String [][] mtz){
+    
+        for (int i = 0; i < Constants.N_ROWS; i++) {
+            for (int j = 0; j < Constants.N_COLUMNS; j++) {
+                Matrix[i][j] = new ExcelCell(mtz[i][j]);
+            }
+        }
+    }
 
     public void applyFilter(Position p, Constants.Filter filter, String filterValue) {
         Cell currentCell = getCell(p);

@@ -12,6 +12,7 @@ import Command.CommandManager;
 import Command.Command;
 import ViewMode.NormalViewMode;
 import ViewMode.StrategyViewMode;
+import SaveFile.FileBuilder;
 import java.io.File;
 import java.util.ArrayList;
 import logic.Cell;
@@ -32,7 +33,6 @@ public class Controller {
     SagaFile SFile;
 
     public Controller() {
-
         spreadsheet = new Spreadsheet();
     }
 
