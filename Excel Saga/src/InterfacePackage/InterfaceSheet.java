@@ -47,13 +47,15 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     public void updateTable() {
         String[][] matrix = controller.getMatrix();
-
+        System.out.println("res = "+matrix[0][0]);
+        overlookTableListener = true;
         for (int i = 0; i < Constants.N_ROWS; i++) {
             for (int j = 0; j < Constants.N_COLUMNS; j++) {
-                overlookTableListener = true;
+                
                 jTable1.getModel().setValueAt(matrix[i][j], i, j);
             }
         }
+        overlookTableListener = false;
     }
 
     /**
@@ -152,6 +154,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
         TxtAreaform.setColumns(20);
         TxtAreaform.setRows(5);
+        TxtAreaform.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TxtAreaformFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(TxtAreaform);
 
         BTNcsv.setText("CSV");
@@ -508,7 +515,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 // do some actions here, for example
                 // print first column value from selected row
                 TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
-
+                
                 //JOptionPane.showMessageDialog(null,jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
             }
         });
@@ -530,6 +537,12 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jTable1KeyPressed
+
+    private void TxtAreaformFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusLost
+        // TODO add your handling code here:
+        controller.setCellValue(column, row, this.TxtAreaform.getText());
+        this.updateTable();
+    }//GEN-LAST:event_TxtAreaformFocusLost
 
     /**
      * @param args the command line arguments
