@@ -9,15 +9,8 @@ package LoadFiles;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.Cursor;
-import logic.Cell;
 import logic.Spreadsheet;
-import sun.security.provider.VerificationProvider;
 import utils.Constants;
-
-
 
 /**
  *
@@ -28,12 +21,14 @@ public class CSVFile extends FileType{
     public void ReadCSVFile(File f) throws FileNotFoundException{
          System.out.println("read CSVFile !");
      
-         Cell Matrix[][] = new Cell[Constants.N_ROWS][Constants.N_COLUMNS];
+         String Matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
          
-          //25 colunas
-          //100 linhas
-         int n_linha = 0;
-          
+        //25 colunas
+        //100 linhas
+        
+        int n_linha = 0;
+        int n_colunas = 0;
+        
         if(f.exists()){
        
 		Scanner sc = new Scanner(f);
@@ -41,33 +36,34 @@ public class CSVFile extends FileType{
                 ++n_linha;    
                     
 		String linha = 	sc.nextLine();
-                    System.out.println(linha);
+                System.out.println(linha);
                 String[] parts = linha.split(";");
-               
-                
-                
-                int n_colunas = parts.length;
+                              
+                n_colunas = parts.length;
                 
                 if(!Verify_Cols(n_colunas)){
                 //erro o ficheiro está corrompido
+                System.out.println("numero de colunas não aceitavel");
                 return;
                 }
                 
                 
                     for (int i = 0; parts.length > i;i++){
-                       Matrix[n_linha][i].setValue(parts[i]);
+                       Matrix[n_linha][i] = parts[i];
                     }
                
                 }
             if(!Verify_Rows(n_linha))
             {
             //mensagem de erro 
+                System.out.println("numero de linhas não aceitavel");
                 //return ;
             }else{
 
             //coloca a matriz obtida para a spreadsheet
-            //Spreadsheet sp = Spreadsheet.getSpreadsheet();
-            //sp.setMatriz(mtz);
+                System.out.println("matriz de dados com nº linha: " + n_linha + " colunas: " + n_colunas);
+                Spreadsheet sp = Spreadsheet.getSpreadsheet();                    
+                sp.setMatriz(Matrix);
             }        
                 
         }else
@@ -79,11 +75,11 @@ public class CSVFile extends FileType{
     };
 
     public boolean Verify_Cols(int col){
-    return col == Constants.N_COLUMNS;       
+    return col <= Constants.N_COLUMNS;       
     }
     
     public boolean Verify_Rows(int raw){
-    return raw == Constants.N_ROWS;
+    return raw <= Constants.N_ROWS;
     }
     
     

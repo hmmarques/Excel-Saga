@@ -19,20 +19,15 @@ public class XMLBuilder extends FileBuilder{
     }
 
     @Override
-    public void addCellValue() {
-        System.out.println("add cell (XML)");
+    public String FileHeader() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void addSeperator() {
-     System.out.println("add seperator (XML)");
+    public String FileFinal() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public File getBuilder() {
-        System.out.println("get builder (XML)");
-        
-        return null;
-    }
+    
     
 }
