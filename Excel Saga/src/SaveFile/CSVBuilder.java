@@ -6,6 +6,10 @@
 package SaveFile;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import logic.Cell;
+import utils.Constants;
 
 /**
  *
@@ -13,28 +17,92 @@ import java.io.File;
  */
 public class CSVBuilder extends FileBuilder{
 
+    //Delimiter used in CSV file
+    private static final String DELIMITER = ";";
+    private static final String NEW_LINE_SEPARATOR = "\n";
+
+    
+    FileWriter fileWriter = null;
+    //CSV file header
+//    private static final String FILE_HEADER = "id,firstName,lastName,gender,age";
+
     @Override
     public void buildFile() {
        System.out.println("build file (CSV)");
        
-       
+       Cell aux_Matrix[][] = getMatrixinfo();
+       if(aux_Matrix == null){
+          System.out.print("matrix nulla ao tentar criar o ficheiro CSV");
+           return;
+       }
+        try {
+
+            fileWriter = new FileWriter(name);
+
+            //Write the CSV file header
+
+//            fileWriter.append(FileHeader());
+             
+            //Add a new line separator after the header
+            
+
+             
+
+            //Write a cell to the CSV file
+            
+            
+            for (int i = 0;i<Constants.N_ROWS;i++)
+            {
+                fileWriter.append(NEW_LINE_SEPARATOR);
+                
+                for (int y = 0;y<Constants.N_COLUMNS;y++)
+                {
+                if(y == 0){
+                fileWriter.append(aux_Matrix[i][y].getValue());
+                }else{   
+                fileWriter.append(DELIMITER);
+                fileWriter.append(aux_Matrix[i][y].getValue());
+                }
+
+                }           
+            }
+            
+
+           System.out.println("CSV file was created successfully !!!");
+
+        } catch (IOException e) {
+            System.out.println("Error in CsvFileWriter !!!");
+            //e.printStackTrace();
+        } finally {
+             
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                System.out.println("Error while flushing/closing fileWriter !!!");
+                //e.printStackTrace();
+            }   
+        }
     }
 
     @Override
-    public void addCellValue() {
-        System.out.println("add cell (CSV)");
+    public String FileHeader() {
+        return"";
     }
 
     @Override
-    public void addSeperator() {
-     System.out.println("add seperator (CSV)");
+    public String FileFinal() {
+        return"";
     }
 
-    @Override
-    public File getBuilder() {
-        System.out.println("get builder (CSV)");
-        
-        return null;
-    }
+
+
+    
+
+
+
+   
+
+  
     
 }

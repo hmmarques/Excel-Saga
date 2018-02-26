@@ -7,15 +7,11 @@ package Controller;
 
 import LoadFiles.FileAdapter;
 import LoadFiles.SagaFile;
-import Command.EditCell;
 import Command.CommandManager;
-import Command.Command;
+import ViewMode.NormalViewMode;
+import ViewMode.StrategyViewMode;
 import java.io.File;
-import java.util.ArrayList;
-import logic.Cell;
 import logic.Spreadsheet;
-import logic.*;
-import utils.Constants;
 import utils.Constants.Filter;
 import utils.Position;
 
@@ -30,7 +26,6 @@ public class Controller {
     SagaFile SFile;
 
     public Controller() {
-
         this.spreadsheet = Spreadsheet.getSpreadsheet();
         this.Cmg = CommandManager.getInstance();
         this.SFile = new FileAdapter();
@@ -59,13 +54,10 @@ public class Controller {
     }
 
     public String[][] getMatrix() {
-        String[][] m = new String[Constants.N_ROWS][Constants.N_COLUMNS];
-        for (int i = 0; i < Constants.N_ROWS; i++) {
-            for (int j = 0; j < Constants.N_COLUMNS; j++) {
-                m[i][j] = spreadsheet.getCell(new Position(i, j)).getValue();
-            }
-        }
-        return m;
+        
+        StrategyViewMode s = new NormalViewMode();
+
+        return s.viewSpreadsheet();
     }
 
     public void applyFilter(Position p, Filter filter, String filterValue) {
