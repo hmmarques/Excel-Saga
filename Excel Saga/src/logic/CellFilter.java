@@ -19,6 +19,10 @@ public abstract class CellFilter extends Cell{
         //getFilters().add(this);
     }
     
+    public Cell getInsideCell(){
+        return cell;
+    }
+    
     @Override
     public abstract String getValue();
     

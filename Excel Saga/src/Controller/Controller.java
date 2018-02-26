@@ -31,7 +31,9 @@ public class Controller {
 
     public Controller() {
 
-        spreadsheet = new Spreadsheet();
+        this.spreadsheet = Spreadsheet.getSpreadsheet();
+        this.Cmg = CommandManager.getInstance();
+        this.SFile = new FileAdapter();
     }
 
     public void upload() {
@@ -64,12 +66,6 @@ public class Controller {
             }
         }
         return m;
-    }
-
-    public Controller(Spreadsheet spreedsheet) {
-        this.spreadsheet = Spreadsheet.getSpreadsheet();
-        this.Cmg = CommandManager.getInstance();
-        this.SFile = new FileAdapter();
     }
 
     public void applyFilter(Position p, Filter filter, String filterValue) {

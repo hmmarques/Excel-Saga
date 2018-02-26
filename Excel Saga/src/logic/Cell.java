@@ -14,13 +14,9 @@ import java.util.ArrayList;
 public abstract class Cell {
     
     String value;
-    ArrayList<CellFilter> filters;
 
     public abstract String getValue();
 
     public abstract void setValue(String value);  
     
-    /*public ArrayList<CellFilter> getFilters(){
-        return filters;
-    }*/
 }

@@ -5,6 +5,7 @@
  */
 package logic;
 
+import java.util.ArrayList;
 import utils.*;
 
 /**
@@ -14,12 +15,15 @@ import utils.*;
 public class Spreadsheet {
 
     Cell[][] Matrix = new Cell[Constants.N_ROWS][Constants.N_COLUMNS];
+    ArrayList<Filter>[][] MatrixFilters = new ArrayList[Constants.N_ROWS][Constants.N_COLUMNS];
     static Spreadsheet ss;
+    boolean addToFilterArrayList = true;
 
     public Spreadsheet() {
         for (int i = 0; i < Constants.N_ROWS; i++) {
             for (int j = 0; j < Constants.N_COLUMNS; j++) {
                 Matrix[i][j] = new ExcelCell("");
+                MatrixFilters[i][j] = new ArrayList<>();
             }
         }
     }
@@ -78,11 +82,32 @@ public class Spreadsheet {
                 afterFilterCell = null;
         }
         if (afterFilterCell != null) {
+            if(addToFilterArrayList){
+                MatrixFilters[p.getRow()][p.getColumn()].add(new Filter(filter));
+            }
             setCell(p, afterFilterCell);
         }
     }
 
     public void removeFilter(Position p, Constants.Filter filter) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        for(int i = 0; i < MatrixFilters[p.getRow()][p.getColumn()].size(); i++){
+            if(MatrixFilters[p.getRow()][p.getColumn()].get(i).getFilter().equals(filter)){
+                MatrixFilters[p.getRow()][p.getColumn()].remove(MatrixFilters[p.getRow()][p.getColumn()].get(i));
+            }
+        }
+        
+        Cell core = getCell(p);
+        while(!(core instanceof ExcelCell)){
+            core = ((CellFilter)core).getInsideCell();
+        }
+        
+        setCell(p, core);
+        
+        addToFilterArrayList = false;
+        MatrixFilters[p.getRow()][p.getColumn()].forEach((f) -> {
+            applyFilter(p, f.getFilter(), f.getValue());
+        });
+        addToFilterArrayList = true;
     }
 }
