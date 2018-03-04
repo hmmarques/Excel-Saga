@@ -17,6 +17,17 @@ public class NegativeFilter extends CellFilter{
     
         @Override
     public String getValue(){
+        double n = 0;
+
+        try {
+            n = Double.parseDouble(this.cell.getValue());
+        } catch (NumberFormatException e) {
+            return this.cell.getValue();
+        }
+
+        if (n < 0) {
+            return n + "";
+        }
         return "";
     }
     

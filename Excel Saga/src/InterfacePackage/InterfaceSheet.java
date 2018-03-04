@@ -10,7 +10,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import Controller.Controller;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import javax.swing.JTable;
+import logic.BiggerThanFilter;
+import logic.EqualFilter;
+import logic.NegativeFilter;
+import logic.PositiveFilter;
+import logic.SmallerThanFilter;
+import logic.UpperFilter;
 import utils.Constants;
 import utils.Position;
 
@@ -41,21 +48,58 @@ public class InterfaceSheet extends javax.swing.JFrame {
             if (!overlookTableListener) {
                 controller.setCellValue(column, row, jTable1.getModel().getValueAt(row, column).toString());
                 TxtAreaform.setText(jTable1.getModel().getValueAt(row, column).toString());
+                overlookTableListener = true;
+                jTable1.getModel().setValueAt(controller.getCellValue(new Position(row, column)), row, column);
             }
             overlookTableListener = false;
         });
-        
-       
+
     }
 
     public void updateTable() {
         String[][] matrix = controller.getMatrix();
-       // System.out.println("res = "+matrix[0][0]);
-        
+        // System.out.println("res = "+matrix[0][0]);
+
         for (int i = 0; i < Constants.N_ROWS; i++) {
             for (int j = 0; j < Constants.N_COLUMNS; j++) {
                 overlookTableListener = true;
                 jTable1.getModel().setValueAt(matrix[i][j], i, j);
+            }
+        }
+    }
+
+    public void updateFilters() {
+        ArrayList<utils.Filter> filters = controller.getFilters(new Position(row, column));
+
+        JCBUppercase.setSelected(false);
+        JRPositive.setSelected(false);
+        JRNegative.setSelected(false);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+
+        for (utils.Filter f : filters) {
+            switch (f.getFilter()) {
+                case UPPERCASE:
+                    JCBUppercase.setSelected(true);
+                    break;
+                case POSITIVE:
+                    JRPositive.setSelected(true);
+                    break;
+                case NEGATIVE:
+                    JRNegative.setSelected(true);
+                    break;
+                case BIGGERTHAN:
+                    jTextField1.setText(f.getValue());
+                    break;
+                case SMALLERTHAN:
+                    jTextField2.setText(f.getValue());
+                    break;
+                case EQUAL:
+                    jTextField3.setText(f.getValue());
+                    break;
+                default:
+
             }
         }
     }
@@ -89,6 +133,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         BtnApplyFilters = new javax.swing.JButton();
         BTNchooseFile = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -186,6 +232,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
         });
 
         BTNhtml.setText("HTML");
+        BTNhtml.setMaximumSize(new java.awt.Dimension(51, 23));
+        BTNhtml.setMinimumSize(new java.awt.Dimension(51, 23));
         BTNhtml.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BTNhtmlMouseClicked(evt);
@@ -299,6 +347,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "W", "X", "Y", "Z"
             }
         ));
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable1.setColumnSelectionAllowed(false);
         jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTable1FocusGained(evt);
@@ -319,11 +369,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
-
-        jTextField3.setText("jTextField3");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         BtnApplyFilters.setText("Apply Filters");
         BtnApplyFilters.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -349,6 +399,15 @@ public class InterfaceSheet extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Undo");
+
+        jButton2.setText("Redo");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -358,87 +417,87 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(JRNormal)
-                            .addComponent(JRFunctional))
-                        .addGap(45, 45, 45)
+                            .addComponent(JRFunctional, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(JCBUppercase)
                             .addComponent(JRNegative)
                             .addComponent(JRPositive))
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(BtnApplyFilters))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                                    .addComponent(jTextField1)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(BtnApplyFilters, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(29, 29, 29)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(BTNhtml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BTNxml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BTNcsv, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(BTNchooseFile)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(BTNcsv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(BTNxml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(BTNhtml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(170, 170, 170))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(BTNchooseFile)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BTNcsv)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BTNxml)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BTNhtml))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(BTNchooseFile))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BTNxml)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BTNhtml, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BTNchooseFile))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JRNormal)
+                            .addComponent(JCBUppercase)
                             .addComponent(jLabel1)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JRFunctional)
+                            .addComponent(JRPositive)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(JRNegative)
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtnApplyFilters))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JRNormal)
-                            .addComponent(JCBUppercase))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JRFunctional)
-                            .addComponent(JRPositive))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JRNegative)))
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                            .addComponent(jButton2)
+                            .addComponent(BtnApplyFilters)))
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -466,8 +525,21 @@ public class InterfaceSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnApplyFiltersActionPerformed
 
     private void BtnApplyFiltersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnApplyFiltersMouseClicked
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Botão para aplicar filtros");
+        controller.removeFilter(new Position(row, column), Constants.Filter.BIGGERTHAN);
+        if (!jTextField1.getText().equals("")) {
+            controller.applyFilter(new Position(row, column), Constants.Filter.BIGGERTHAN, jTextField1.getText());
+        }
+
+        controller.removeFilter(new Position(row, column), Constants.Filter.SMALLERTHAN);
+        if (!jTextField2.getText().equals("")) {
+            controller.applyFilter(new Position(row, column), Constants.Filter.SMALLERTHAN, jTextField2.getText());
+        }
+
+        controller.removeFilter(new Position(row, column), Constants.Filter.EQUAL);
+        if (!jTextField3.getText().equals("")) {
+            controller.applyFilter(new Position(row, column), Constants.Filter.EQUAL, jTextField3.getText());
+        }
+        updateTable();
     }//GEN-LAST:event_BtnApplyFiltersMouseClicked
 
     private void JRNormalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRNormalMouseClicked
@@ -492,13 +564,25 @@ public class InterfaceSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_JCBUppercaseMouseClicked
 
     private void JRPositiveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRPositiveMouseClicked
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Radio Button Positive");
+        if (row != -1 || column != -1) {
+            if (JRPositive.isSelected()) {
+                controller.applyFilter(new Position(row, column), Constants.Filter.POSITIVE, "");
+            } else {
+                controller.removeFilter(new Position(row, column), Constants.Filter.POSITIVE);
+            }
+            updateTable();
+        }
     }//GEN-LAST:event_JRPositiveMouseClicked
 
     private void JRNegativeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRNegativeMouseClicked
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Radio Button Negative");
+        if (row != -1 || column != -1) {
+            if (JRNegative.isSelected()) {
+                controller.applyFilter(new Position(row, column), Constants.Filter.NEGATIVE, "");
+            } else {
+                controller.removeFilter(new Position(row, column), Constants.Filter.NEGATIVE);
+            }
+            updateTable();
+        }
     }//GEN-LAST:event_JRNegativeMouseClicked
 
     private void BTNxmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNxmlMouseClicked
@@ -533,7 +617,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 // do some actions here, for example
                 // print first column value from selected row
                 TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
-                
+
                 //JOptionPane.showMessageDialog(null,jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
             }
         });
@@ -558,22 +642,21 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void TxtAreaformFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusLost
         // TODO add your handling code here:
-        
-        System.out.println("row: " +row);
+
+        System.out.println("row: " + row);
         System.out.println("column:" + column);
-        System.out.println("rowAux: "+rowAux);
-        System.out.println("columnAux: "+columnAux);
-        System.out.println("re: "+this.TxtAreaform.getText());
+        System.out.println("rowAux: " + rowAux);
+        System.out.println("columnAux: " + columnAux);
+        System.out.println("re: " + this.TxtAreaform.getText());
         controller.setCellValue(columnAux, rowAux, this.TxtAreaform.getText());
         this.updateTable();
     }//GEN-LAST:event_TxtAreaformFocusLost
 
     private void TxtAreaformFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusGained
- 
-        
+
 //        this.columnAux = this.column;
 //        this.rowAux = this.row;   
-        
+
     }//GEN-LAST:event_TxtAreaformFocusGained
 
     private void TxtAreaformMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtAreaformMouseClicked
@@ -588,14 +671,23 @@ public class InterfaceSheet extends javax.swing.JFrame {
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // TODO add your handling code here:
         this.columnAux = this.column;
-        this.rowAux = this.row;   
+        this.rowAux = this.row;
         this.cmdAux = this.TxtAreaform.getText();
         row = jTable1.getSelectedRow();
         column = jTable1.getSelectedColumn();
-        
+
+        updateFilters();
 
         //System.out.println("x: "+jTable1.getSelectedRow() + "y: " + jTable1.getSelectedColumn());
     }//GEN-LAST:event_jTable1MousePressed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -645,6 +737,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
     private javax.swing.JRadioButton JRNormal;
     private javax.swing.JRadioButton JRPositive;
     private javax.swing.JTextArea TxtAreaform;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

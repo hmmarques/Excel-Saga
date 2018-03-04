@@ -11,7 +11,9 @@ import Command.CommandManager;
 import ViewMode.NormalViewMode;
 import ViewMode.StrategyViewMode;
 import java.io.File;
+import java.util.ArrayList;
 import logic.Spreadsheet;
+import utils.Constants;
 import utils.Constants.Filter;
 import utils.Position;
 
@@ -59,6 +61,10 @@ public class Controller {
 
         return s.viewSpreadsheet();
     }
+    
+    public ArrayList<utils.Filter> getFilters(Position p){
+        return spreadsheet.getFilters(p);
+    }
 
     public void applyFilter(Position p, Filter filter, String filterValue) {
         spreadsheet.applyFilter(p, filter, filterValue);
@@ -71,6 +77,10 @@ public class Controller {
     public File OpenFile() {
 
         return null;
+    }
+
+    public String getCellValue(Position position) {
+        return spreadsheet.getCellValue(position);
     }
 
 }

@@ -9,21 +9,32 @@ package logic;
  *
  * @author Sergio Cruz
  */
-public class BiggerThanFilter extends CellFilter{
-    
+public class BiggerThanFilter extends CellFilter {
+
     public BiggerThanFilter(Cell c, String filterValue) {
         super();
         this.cell = c;
         this.filterValue = filterValue;
     }
-    
+
     @Override
-    public String getValue(){
+    public String getValue() {
+        double n = 0;
+
+        try {
+            n = Double.parseDouble(this.cell.getValue());
+        } catch (NumberFormatException e) {
+            return this.cell.getValue();
+        }
+
+        if (!filterValue.equals("") && n > Double.parseDouble(filterValue)) {
+            return n + "";
+        }
         return "";
     }
-    
+
     @Override
-    public void setValue(String value){
+    public void setValue(String value) {
         this.cell.setValue(value);
     }
 }
