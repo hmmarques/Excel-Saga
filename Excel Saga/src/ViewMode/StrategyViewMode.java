@@ -3,20 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logic;
-
-import java.util.ArrayList;
+package ViewMode;
 
 /**
  *
- * @author Sergio Cruz
+ * @author Judith
  */
-public abstract class Cell {
+public interface StrategyViewMode {
     
-    String value;
-
-    public abstract String getValue();
-
-    public abstract void setValue(String value);  
+    String[][] viewSpreadsheet();
     
 }
