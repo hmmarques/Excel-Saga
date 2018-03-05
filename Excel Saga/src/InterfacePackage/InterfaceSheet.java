@@ -11,6 +11,9 @@ import javax.swing.event.ListSelectionListener;
 import Controller.Controller;
 import java.awt.event.KeyEvent;
 import javax.swing.JTable;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import logic.Spreadsheet;
 import utils.Constants;
 import utils.Position;
 
@@ -23,6 +26,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
     private int row, column, rowAux, columnAux;
     private boolean overlookTableListener;
     private String cmdAux;
+    private boolean controlTxtAreaform;
     /**
      * Creates new form InterfaceSheet
      */
@@ -34,6 +38,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
         rowAux = -1;
         columnAux = -1;
         cmdAux = "";
+        controlTxtAreaform = true;
         initComponents();
         controller = new Controller();
 
@@ -45,6 +50,53 @@ public class InterfaceSheet extends javax.swing.JFrame {
             overlookTableListener = false;
         });
         
+        TxtAreaform.getDocument().addDocumentListener(new DocumentListener() {
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            
+            if(controlTxtAreaform){
+                cmdAux = TxtAreaform.getText();
+                System.out.println("removeUpdate: " + cmdAux);
+                System.out.println("col: " + column + "  row: " + row);
+                System.out.println("colAux: " + columnAux + "  rowAux: " + rowAux);
+                
+                if(rowAux != -1 && columnAux != -1){
+                    controller.setCellValue(columnAux, rowAux, cmdAux);
+                }
+            }
+        }
+
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            if(controlTxtAreaform){
+                cmdAux = TxtAreaform.getText();
+                System.out.println("insertUpdate: " + cmdAux);
+                System.out.println("col: " + column + "  row: " + row);
+                System.out.println("colAux: " + columnAux + "  rowAux: " + rowAux);
+
+
+                if(rowAux != -1 && columnAux != -1){
+                    controller.setCellValue(columnAux, rowAux, cmdAux);
+                }
+            }
+            
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent arg0) {
+            if(controlTxtAreaform){
+                cmdAux = TxtAreaform.getText();
+                System.out.println("changedUpdate: " + cmdAux);
+
+                if(rowAux != -1 && columnAux != -1){
+                    controller.setCellValue(columnAux, rowAux, cmdAux);
+                }
+            }
+        }
+
+    });
+        
        
     }
 
@@ -52,12 +104,15 @@ public class InterfaceSheet extends javax.swing.JFrame {
         String[][] matrix = controller.getMatrix();
        // System.out.println("res = "+matrix[0][0]);
         
+      
         for (int i = 0; i < Constants.N_ROWS; i++) {
             for (int j = 0; j < Constants.N_COLUMNS; j++) {
                 overlookTableListener = true;
                 jTable1.getModel().setValueAt(matrix[i][j], i, j);
             }
         }
+        
+        
     }
 
     /**
@@ -509,8 +564,20 @@ public class InterfaceSheet extends javax.swing.JFrame {
     private void BTNchooseFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNchooseFileMouseClicked
         // TODO add your handling code here:
 
-        ChooseFile face = new ChooseFile();
-        face.show();
+        ChooseFile face = new ChooseFile(this);
+//        Spreadsheet sp = Spreadsheet.getSpreadsheet();
+        //face.show();
+        face.setVisible (true);
+        
+//        for (int i = 0; i < 20; i++) {
+//            for (int j = 0; j < 20; j++) {
+//               // System.out.println(" - "+ sp.getCell(new Position(i, j)).getValue());
+//            }
+//            
+//        }
+        //this.updateTable();
+       
+        
 
     }//GEN-LAST:event_BTNchooseFileMouseClicked
 
@@ -532,8 +599,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent event) {
                 // do some actions here, for example
                 // print first column value from selected row
-                TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
                 
+                //TODO
+                controlTxtAreaform = false;
+                TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+                controlTxtAreaform = true;
                 //JOptionPane.showMessageDialog(null,jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
             }
         });
@@ -559,20 +629,16 @@ public class InterfaceSheet extends javax.swing.JFrame {
     private void TxtAreaformFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusLost
         // TODO add your handling code here:
         
-        System.out.println("row: " +row);
-        System.out.println("column:" + column);
-        System.out.println("rowAux: "+rowAux);
-        System.out.println("columnAux: "+columnAux);
-        System.out.println("re: "+this.TxtAreaform.getText());
-        controller.setCellValue(columnAux, rowAux, this.TxtAreaform.getText());
+       
+        controller.setCellValue(columnAux, rowAux, cmdAux);
         this.updateTable();
     }//GEN-LAST:event_TxtAreaformFocusLost
 
     private void TxtAreaformFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusGained
  
         
-//        this.columnAux = this.column;
-//        this.rowAux = this.row;   
+        rowAux = jTable1.getSelectedRow();
+        columnAux = jTable1.getSelectedColumn(); 
         
     }//GEN-LAST:event_TxtAreaformFocusGained
 
@@ -587,9 +653,10 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // TODO add your handling code here:
-        this.columnAux = this.column;
-        this.rowAux = this.row;   
-        this.cmdAux = this.TxtAreaform.getText();
+//        this.columnAux = this.column;
+//        this.rowAux = this.row;   
+        //this.cmdAux = this.TxtAreaform.getText();
+        System.out.println("------------------------------------------------------------------------------");
         row = jTable1.getSelectedRow();
         column = jTable1.getSelectedColumn();
         
