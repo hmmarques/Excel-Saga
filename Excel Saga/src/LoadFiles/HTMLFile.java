@@ -43,6 +43,10 @@ System.out.println("i="+ i + row.text());
 //    if (cols.get(7).text().equals("down")) {
 //        downServers.add(cols.get(5).text());
 //    }
+
+String [] values = row.text().split(" ");
+
+
 }
           
         

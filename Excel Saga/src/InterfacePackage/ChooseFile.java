@@ -8,6 +8,8 @@ package InterfacePackage;
 import LoadFiles.FileAdapter;
 import LoadFiles.SagaFile;
 import java.io.File;
+import logic.Spreadsheet;
+import utils.Position;
 
 /**
  *
@@ -18,8 +20,11 @@ public class ChooseFile extends javax.swing.JFrame {
     /**
      * Creates new form ChooseFile
      */
-    public ChooseFile() {
+    InterfaceSheet is;
+
+    public ChooseFile(InterfaceSheet is) {
         initComponents();
+        this.is = is;
     }
 
     /**
@@ -67,18 +72,23 @@ public class ChooseFile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-       
-        
-        File file = jFileChooser1.getSelectedFile();
-  
-       System.out.println(file.getName());
-       
-       SagaFile sf =  new FileAdapter();
-       sf.readFile(file);
-       
-//fecha janela
-       
-       
+
+        if (evt.getActionCommand().equals(javax.swing.JFileChooser.APPROVE_SELECTION)) {
+            System.out.println("Read File");
+
+            File file = jFileChooser1.getSelectedFile();
+            System.out.println(file.getName());
+
+            SagaFile sf = new FileAdapter();
+            sf.readFile(file);
+
+            is.updateTable();
+        } else if (evt.getActionCommand().equals(javax.swing.JFileChooser.CANCEL_SELECTION)) {
+            System.out.println("Close");
+        }
+
+        this.setVisible(false);
+
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     private void jFileChooser1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFileChooser1MouseExited
@@ -115,7 +125,7 @@ public class ChooseFile extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChooseFile().setVisible(true);
+                //new ChooseFile().setVisible(true);
             }
         });
     }

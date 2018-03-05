@@ -27,7 +27,7 @@ public class FunctionalViewMode implements StrategyViewMode {
         String[][] m = new String[Constants.N_ROWS][Constants.N_COLUMNS];
         for (int i = 0; i < Constants.N_ROWS; i++) {
             for (int j = 0; j < Constants.N_COLUMNS; j++) {
-                m[i][j] = spreadsheet.getCell(new Position(i, j)).getValue();
+               // m[i][j] = spreadsheet.getCell(new Position(i, j)).getValue();
             }
         }
         return m;

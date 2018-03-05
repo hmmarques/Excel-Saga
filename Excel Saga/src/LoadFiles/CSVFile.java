@@ -19,6 +19,7 @@ import utils.Constants;
 public class CSVFile extends FileType{
     
     public void ReadCSVFile(File f) throws FileNotFoundException{
+
          System.out.println("read CSVFile !");
      
          String Matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
@@ -93,15 +94,9 @@ public class CSVFile extends FileType{
     public boolean Verify_Rows(int raw){
     return raw <= Constants.N_ROWS;
     }
-    
-    
+
     @Override
     public void readFileType(File f) {
-        try {
-            ReadCSVFile(f);
-        } catch (FileNotFoundException ex) {
-           
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

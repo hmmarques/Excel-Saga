@@ -39,7 +39,7 @@ public class Spreadsheet {
         getCell(p).setValue(value);
     }
 
-    public Cell getCell(Position p) {
+    private Cell getCell(Position p) {
         return Matrix[p.getRow()][p.getColumn()];
     }
 
@@ -55,9 +55,9 @@ public class Spreadsheet {
 
         return this.Matrix;
     }
-    
-    public void setMatriz(String [][] mtz){
-    
+
+    public void setMatriz(String[][] mtz) {
+
         for (int i = 0; i < Constants.N_ROWS; i++) {
             for (int j = 0; j < Constants.N_COLUMNS; j++) {
                 Matrix[i][j] = new ExcelCell(mtz[i][j]);
@@ -91,8 +91,8 @@ public class Spreadsheet {
                 afterFilterCell = null;
         }
         if (afterFilterCell != null) {
-            if(addToFilterArrayList){
-                MatrixFilters[p.getRow()][p.getColumn()].add(new Filter(filter));
+            if (addToFilterArrayList) {
+                MatrixFilters[p.getRow()][p.getColumn()].add(new Filter(filter, filterValue));
             }
             setCell(p, afterFilterCell);
         }
@@ -100,23 +100,31 @@ public class Spreadsheet {
 
     public void removeFilter(Position p, Constants.Filter filter) {
 
-        for(int i = 0; i < MatrixFilters[p.getRow()][p.getColumn()].size(); i++){
-            if(MatrixFilters[p.getRow()][p.getColumn()].get(i).getFilter().equals(filter)){
+        for (int i = 0; i < MatrixFilters[p.getRow()][p.getColumn()].size(); i++) {
+            if (MatrixFilters[p.getRow()][p.getColumn()].get(i).getFilter().equals(filter)) {
                 MatrixFilters[p.getRow()][p.getColumn()].remove(MatrixFilters[p.getRow()][p.getColumn()].get(i));
             }
         }
-        
+
         Cell core = getCell(p);
-        while(!(core instanceof ExcelCell)){
-            core = ((CellFilter)core).getInsideCell();
+        while (!(core instanceof ExcelCell)) {
+            core = ((CellFilter) core).getInsideCell();
         }
-        
+
         setCell(p, core);
-        
+
         addToFilterArrayList = false;
         MatrixFilters[p.getRow()][p.getColumn()].forEach((f) -> {
             applyFilter(p, f.getFilter(), f.getValue());
         });
         addToFilterArrayList = true;
+    }
+
+    public ArrayList<Filter> getFilters(Position p) {
+        return MatrixFilters[p.getRow()][p.getColumn()];
+    }
+
+    public String getCellValue(Position position) {
+        return getCell(position).getValue();
     }
 }
