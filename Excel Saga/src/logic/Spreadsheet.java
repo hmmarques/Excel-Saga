@@ -39,7 +39,7 @@ public class Spreadsheet {
         getCell(p).setValue(value);
     }
 
-    private Cell getCell(Position p) {
+    public Cell getCell(Position p) {
         return Matrix[p.getRow()][p.getColumn()];
     }
 
