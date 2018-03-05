@@ -673,8 +673,9 @@ public class InterfaceSheet extends javax.swing.JFrame {
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
 
-                controlTxtAreaform = true;
+                controlTxtAreaform = false;
                 TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+                controlTxtAreaform = true;
             }
         });
 
@@ -698,16 +699,14 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void TxtAreaformFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusLost
         // TODO add your handling code here:
-       
-       
-        controller.setCellValue(columnAux, rowAux, cmdAux);
-
-        System.out.println("row: " + row);
+      // controlTxtAreaform = true;
+        System.out.println("row: " +row);
         System.out.println("column:" + column);
-        System.out.println("rowAux: " + rowAux);
-        System.out.println("columnAux: " + columnAux);
-        System.out.println("re: " + this.TxtAreaform.getText());
-        controller.setCellValue(columnAux, rowAux, this.TxtAreaform.getText());
+        System.out.println("rowAux: "+rowAux);
+        System.out.println("columnAux: "+columnAux);
+        System.out.println("re: "+cmdAux);
+        controller.setCellValue(columnAux, rowAux, cmdAux);
+       // this.updateTable();
 
         this.updateTable();
     }//GEN-LAST:event_TxtAreaformFocusLost
@@ -739,9 +738,9 @@ public class InterfaceSheet extends javax.swing.JFrame {
         //this.cmdAux = this.TxtAreaform.getText();
         System.out.println("------------------------------------------------------------------------------");
 
-        this.columnAux = this.column;
-        this.rowAux = this.row;
-        this.cmdAux = this.TxtAreaform.getText();
+//        this.columnAux = this.column;
+//        this.rowAux = this.row;
+        //this.cmdAux = this.TxtAreaform.getText();
         row = jTable1.getSelectedRow();
         column = jTable1.getSelectedColumn();
 
