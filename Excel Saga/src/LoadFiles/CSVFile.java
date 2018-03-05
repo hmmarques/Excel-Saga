@@ -26,12 +26,13 @@ public class CSVFile extends FileType {
         //25 colunas
         //100 linhas
         int n_linha = 0;
-        int n_colunas = 0;
+        int n_col;
 
         if (f.exists()) {
 
             Scanner sc = new Scanner(f);
-            while (sc.hasNextLine()) {
+            while (sc.hasNextLine()) 
+            {
 
                 ++n_linha;
 
@@ -40,48 +41,37 @@ public class CSVFile extends FileType {
 
                 String[] parts = linha.split(";");
 
-                n_colunas = parts.length;
-                if (!Verify_Cols(n_colunas)) {
-                    //erro o ficheiro está corrompido
-                    System.out.println("numero de colunas não aceitavel");
+                n_col = parts.length;
+                
+                if (!Verify_Cols(n_col)) {
+                    //erro o ficheiro não é suportado
+                    System.out.println("Nº of colums not allowed - " + n_col + " _ max:"+ Constants.N_COLUMNS);
                     return;
                 }
 
-                for (int i = 0; n_colunas > i; i++) {
+                for (int i = 0; n_col > i; i++) {
                     Matrix[n_linha - 1][i] = parts[i];
                 }
 
             }
-            if (!Verify_Rows(n_linha)) {
-                //mensagem de erro 
-                System.out.println("numero de linhas não aceitavel");
-                //return ;
-            } else {
+            
+                if (!Verify_Rows(n_linha)) {
+                    //mensagem de erro 
+                      System.out.println("Nº of rows not allowed _ " + n_linha + " _max:"+ Constants.N_ROWS);
+                    //return ;
+                } else {
 
-                //coloca a matriz obtida para a spreadsheet
-                System.out.println("matriz de dados com nº linha: " + n_linha);
-                Spreadsheet sp = Spreadsheet.getSpreadsheet();
+                    Spreadsheet sp = Spreadsheet.getSpreadsheet();
 
-                sp.setMatriz(Matrix);
+                    sp.setMatriz(Matrix);
 
-//                int limit= 0;
-//                for(String[] ok : Matrix){
-//                for(int i = 0;i<4;i++){
-//                    System.out.print(","+ ok[i]);
-//                }
-//                System.out.println();
-//                if(++limit == 4)
-//                    return;
-//                }
-            }
+                 }
 
         } else {
-            System.out.println("fICHEIRO NÃO EXISTE!");
+            System.out.println("fICHEIRO DOES NOT EXIST!");
         }
 
     }
-
-    ;
 
     public boolean Verify_Cols(int col) {
         return col <= Constants.N_COLUMNS;
@@ -96,7 +86,7 @@ public class CSVFile extends FileType {
         try {
             ReadCSVFile(f);
         } catch (FileNotFoundException ex) {
-
+            System.out.println("fILE NOT FOUND!");
         }
     }
 }
