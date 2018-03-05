@@ -97,6 +97,10 @@ public class CSVFile extends FileType{
 
     @Override
     public void readFileType(File f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     try {
+            ReadCSVFile(f);
+        } catch (FileNotFoundException ex) {
+           
+        }
     }
 }
