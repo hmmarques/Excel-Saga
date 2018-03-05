@@ -5,54 +5,53 @@
  */
 package Command;
 
-import Command.Command;
 import java.util.ArrayList;
 
 /**
  *
  * @author Sergio Cruz
  */
-public class CommandManager{
+public class CommandManager {
+
     ArrayList<Command> UndoList = new ArrayList<>();
     ArrayList<Command> RedoList = new ArrayList<>();
-   
+
     private static CommandManager CMg = null;
     //Cell  model[][];
 
     public CommandManager() {
-      //  this.model = Spreadsheet.getSpreadsheet().getMatrix();
+        //  this.model = Spreadsheet.getSpreadsheet().getMatrix();
     }
-    
+
     public static CommandManager getInstance() {
-		if(CMg == null) {
-			CMg = new CommandManager();
-		}
-		return CMg;
-	}
-    
-    
-    public void applyCommand(Command c){  
+        if (CMg == null) {
+            CMg = new CommandManager();
+        }
+        return CMg;
+    }
+
+    public void applyCommand(Command c) {
         c.Do();
-        RedoList.clear(); //duvida deixar ou nao?
+        //RedoList.clear(); 
         UndoList.add(c);
     }
-    
-    public void Undo(){
-       if(!UndoList.isEmpty()){
-       
-       Command last = UndoList.remove(UndoList.size() - 1);
-       last.Undo();
-       RedoList.add(last);      
-       }       
+
+    public void Undo() {
+        if (!UndoList.isEmpty()) {
+
+            Command last = UndoList.remove(UndoList.size() - 1);
+            last.Undo();
+            RedoList.add(last);
+        }
     }
-    
+
     //REDO
-    public void Redo(){
-       if(!RedoList.isEmpty()){
-       
-       Command last = RedoList.remove(RedoList.size() - 1);
-       last.Do();
-       UndoList.add(last);      
-       }       
+    public void Redo() {
+        if (!RedoList.isEmpty()) {
+
+            Command last = RedoList.remove(RedoList.size() - 1);
+            last.Do();
+            UndoList.add(last);
+        }
     }
 }

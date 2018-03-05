@@ -5,7 +5,6 @@
  */
 package Command;
 
-import Command.Command;
 import logic.Spreadsheet;
 import utils.Position;
 
@@ -19,7 +18,8 @@ public class EditCell implements Command{
     String value;
     Position p;
 
-    public EditCell(Position p, String value) {
+    public EditCell(Position p, String value, String originalvalue) {
+        this.originalvalue = originalvalue;
         this.value = value;
         this.p = p;
     }
@@ -28,14 +28,17 @@ public class EditCell implements Command{
     
     @Override
     public void Do() {
+         System.out.println("passei no DOOOO da editCell");
          
-        // this.originalvalue = Spreadsheet.getSpreadsheet().getCell(p).getValue();
-        // Spreadsheet.getSpreadsheet().getCell(p).setValue(value);
+         System.out.println("recebi: " + originalvalue);
+         Spreadsheet.getSpreadsheet().setCellValue(p,value);
     }
 
     @Override
     public void Undo() {
-        //Spreadsheet.getSpreadsheet().getCell(p).setValue(originalvalue);
+        System.out.println("passei no undo da editCell");
+       // Spreadsheet.getSpreadsheet().getCell(p).setValue(originalvalue);
+       Spreadsheet.getSpreadsheet().setCellValue(p, originalvalue);
     }
     
     
