@@ -13,6 +13,7 @@
 # Package Files #
 *.jar
 !h2-1.4.196.jar
+!jsoup-1.11.2.jar
 *.war
 *.ear
 *.zip
