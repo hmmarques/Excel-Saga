@@ -31,6 +31,7 @@ public abstract class FileBuilder {
         case "csv": return new CSVBuilder();
         case "xml": return new XMLBuilder();
         case "html": return new HTMLBuilder();
+        case "bin": return new BINBuilder();
         default: return null;
     }       
     };
