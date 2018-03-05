@@ -12,35 +12,28 @@ import java.io.File;
  * @author Sergio Cruz
  */
 public class FileAdapter implements SagaFile {
-   FileType ft; 
+
+    FileType ft;
 
     public FileAdapter() {
         //referências para os objetos a adaptar.
-    
+
     }
 
     @Override
     public void readFile(File f) {
-     
-        
-        
-      ft = FileType.CreateObject(f.getName());
-      
-      if(ft != null){
-       ft.readFileType(f);
-      }else{
-      System.out.println("deu erro ao abrir o ficheiro!");
-      }
-      
-     
-            
-        
-        
+
+        ft = FileType.CreateObject(f.getName());
+
+        if (ft != null) {
+            ft.readFileType(f);
+        } else {
+            System.out.println("deu erro ao abrir o ficheiro!");
+        }
+
 //        CSVf.ReadCSVFile(OpenFile(path));
 //        XMLf.ReadXMLFile(OpenFile(path));
 //        HTMLf.ReadHTMLFile(OpenFile(path));
-        
     }
-    
-    
+
 }

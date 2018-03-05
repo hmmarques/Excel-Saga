@@ -12,6 +12,7 @@ package logic;
 public class ExcelCell extends Cell{
 
     ExcelCell(String value) {
+        this.value = value;
     }  
     
     @Override
