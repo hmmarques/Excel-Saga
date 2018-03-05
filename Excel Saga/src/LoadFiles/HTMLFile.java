@@ -19,41 +19,34 @@ import utils.Constants;
  *
  * @author Sergio Cruz
  */
-public class HTMLFile extends FileType{
-    
-    public void ReadHTMLFile(File f) throws FileNotFoundException, IOException{
-    
+public class HTMLFile extends FileType {
+
+    public void ReadHTMLFile(File f) throws FileNotFoundException, IOException {
+
         System.out.println("read HTMLFile !");
-     
-         String Matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
-         
+
+        String Matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
+
         //25 colunas
         //100 linhas
-        
         Document doc = Jsoup.parse(f, "UTF-8");
 
         ArrayList<String> downServers = new ArrayList<>();
-Element table = doc.select("table").get(0); //select the first table.
-Elements rows = table.select("tr");
+        Element table = doc.select("table").get(0); //select the first table.
+        Elements rows = table.select("tr");
 
-for (int i = 1; i < rows.size(); i++) { //first row is the col names so skip it.
-    Element row = rows.get(i);
-    Elements cols = row.select("td");
-System.out.println("i="+ i + row.text());
+        for (int i = 1; i < rows.size(); i++) { //first row is the col names so skip it.
+            Element row = rows.get(i);
+            Elements cols = row.select("td");
+            System.out.println("i=" + i + row.text());
 //    if (cols.get(7).text().equals("down")) {
 //        downServers.add(cols.get(5).text());
 //    }
 
-String [] values = row.text().split(" ");
+            String[] values = row.text().split(" ");
 
+        }
 
-}
-          
-        
-        
-        
-        
-        
 //        int n_linha = 0;
 //        int n_colunas = 0;
 //        
@@ -120,15 +113,16 @@ String [] values = row.text().split(" ");
 //        System.out.println("fICHEIRO NÃO EXISTE!");
 //        }
 //    
-    
-    };
-
-    public boolean Verify_Cols(int col){
-    return col <= Constants.N_COLUMNS;       
     }
-    
-    public boolean Verify_Rows(int raw){
-    return raw <= Constants.N_ROWS;
+
+    ;
+
+    public boolean Verify_Cols(int col) {
+        return col <= Constants.N_COLUMNS;
+    }
+
+    public boolean Verify_Rows(int raw) {
+        return raw <= Constants.N_ROWS;
     }
 
     @Override
@@ -136,7 +130,7 @@ String [] values = row.text().split(" ");
         try {
             ReadHTMLFile(f);
         } catch (IOException ex) {
-           
+
         }
     }
 }
