@@ -10,6 +10,7 @@ import LoadFiles.FileAdapter;
 import LoadFiles.SagaFile;
 import Command.CommandManager;
 import Command.EditCell;
+import SaveFile.FileBuilder;
 import ViewMode.NormalViewMode;
 import ViewMode.StrategyViewMode;
 import java.io.File;
@@ -45,7 +46,11 @@ public class Controller {
 
     ;
     
-    public void download() {
+    public void export(String extension) {
+        
+        FileBuilder fb = FileBuilder.getBuilder(extension);
+        fb.setName("TEMP");
+        fb.buildFile();
     }
 
     public void setCellValue(int column, int row, String value) {
