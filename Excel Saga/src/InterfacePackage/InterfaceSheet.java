@@ -672,14 +672,9 @@ public class InterfaceSheet extends javax.swing.JFrame {
         // JOptionPane.showMessageDialog(null,"x= "+jTable1.getSelectedColumn()+"   y= "+jTable1.getSelectedRow());
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
-                // do some actions here, for example
-                // print first column value from selected row
-                
-                //TODO
-                controlTxtAreaform = false;
+
+                controlTxtAreaform = true;
                 TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
-//                controlTxtAreaform = true;
-//                TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
             }
         });
 
