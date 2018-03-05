@@ -19,6 +19,7 @@ import utils.Constants;
 public class CSVFile extends FileType{
     
     public void ReadCSVFile(File f) throws FileNotFoundException{
+
          System.out.println("read CSVFile !");
      
          String Matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
@@ -33,14 +34,15 @@ public class CSVFile extends FileType{
        
 		Scanner sc = new Scanner(f);
 		while (sc.hasNextLine()){
-                ++n_linha;    
                     
+                ++n_linha;                  
+                
 		String linha = 	sc.nextLine();
                 System.out.println(linha);
+                
                 String[] parts = linha.split(";");
                               
-                n_colunas = parts.length;
-                
+                n_colunas = parts.length;               
                 if(!Verify_Cols(n_colunas)){
                 //erro o ficheiro está corrompido
                 System.out.println("numero de colunas não aceitavel");
@@ -48,10 +50,10 @@ public class CSVFile extends FileType{
                 }
                 
                 
-                    for (int i = 0; parts.length > i;i++){
-                       Matrix[n_linha][i] = parts[i];
+                    for (int i = 0; n_colunas > i;i++){                                             
+                       Matrix[n_linha-1][i] = parts[i];                       
                     }
-               
+              
                 }
             if(!Verify_Rows(n_linha))
             {
@@ -61,9 +63,20 @@ public class CSVFile extends FileType{
             }else{
 
             //coloca a matriz obtida para a spreadsheet
-                System.out.println("matriz de dados com nº linha: " + n_linha + " colunas: " + n_colunas);
+                System.out.println("matriz de dados com nº linha: " + n_linha );
                 Spreadsheet sp = Spreadsheet.getSpreadsheet();                    
                 sp.setMatriz(Matrix);
+                
+//                int limit= 0;
+//                for(String[] ok : Matrix){
+//                for(int i = 0;i<4;i++){
+//                    System.out.print(","+ ok[i]);
+//                }
+//                System.out.println();
+//                if(++limit == 4)
+//                    return;
+//                }
+               
             }        
                 
         }else
@@ -81,15 +94,9 @@ public class CSVFile extends FileType{
     public boolean Verify_Rows(int raw){
     return raw <= Constants.N_ROWS;
     }
-    
-    
+
     @Override
     public void readFileType(File f) {
-        try {
-            ReadCSVFile(f);
-        } catch (FileNotFoundException ex) {
-           
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }
