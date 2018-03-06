@@ -269,6 +269,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 BTNcsvMouseClicked(evt);
             }
         });
+        BTNcsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNcsvActionPerformed(evt);
+            }
+        });
 
         BTNxml.setText("XML");
         BTNxml.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -446,6 +451,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
         });
 
         jButton1.setText("Undo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Redo");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -637,22 +647,9 @@ public class InterfaceSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_BTNxmlMouseClicked
 
     private void BTNchooseFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNchooseFileMouseClicked
-        // TODO add your handling code here:
 
         ChooseFile face = new ChooseFile(this);
-//        Spreadsheet sp = Spreadsheet.getSpreadsheet();
-        //face.show();
         face.setVisible (true);
-        
-//        for (int i = 0; i < 20; i++) {
-//            for (int j = 0; j < 20; j++) {
-//               // System.out.println(" - "+ sp.getCell(new Position(i, j)).getValue());
-//            }
-//            
-//        }
-        //this.updateTable();
-
-
     }//GEN-LAST:event_BTNchooseFileMouseClicked
 
     private void BTNhtmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNhtmlMouseClicked
@@ -714,8 +711,6 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
         rowAux = jTable1.getSelectedRow();
         columnAux = jTable1.getSelectedColumn(); 
-          
-
     }//GEN-LAST:event_TxtAreaformFocusGained
 
     private void TxtAreaformMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtAreaformMouseClicked
@@ -728,22 +723,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1FocusGained
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        // TODO add your handling code here:
-
-//        this.columnAux = this.column;
-//        this.rowAux = this.row;   
-        //this.cmdAux = this.TxtAreaform.getText();
-        System.out.println("------------------------------------------------------------------------------");
-
-//        this.columnAux = this.column;
-//        this.rowAux = this.row;
         //this.cmdAux = this.TxtAreaform.getText();
         row = jTable1.getSelectedRow();
         column = jTable1.getSelectedColumn();
 
         updateFilters();
-
-        //System.out.println("x: "+jTable1.getSelectedRow() + "y: " + jTable1.getSelectedColumn());
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -751,8 +735,18 @@ public class InterfaceSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        controller.redo();
+        updateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        controller.undo();
+        updateTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BTNcsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcsvActionPerformed
+        controller.export("csv");
+    }//GEN-LAST:event_BTNcsvActionPerformed
 
     /**
      * @param args the command line arguments

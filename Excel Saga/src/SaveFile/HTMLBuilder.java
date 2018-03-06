@@ -5,7 +5,7 @@
  */
 package SaveFile;
 
-import java.io.File;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import logic.Cell;

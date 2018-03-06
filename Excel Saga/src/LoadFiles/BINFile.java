@@ -3,18 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Operations;
+package LoadFiles;
+
+import java.io.File;
 
 /**
  *
- * @author joao
+ * @author Sergio Cruz
  */
-public class Multiple extends FactoryCalculations{
+public class BINFile extends FileType{
 
-
-
+    
+    
+    
     @Override
-    String operations(String value1, String value2) {
+    public void readFileType(File f) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

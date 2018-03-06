@@ -13,30 +13,36 @@ import logic.Spreadsheet;
  * @author Sergio Cruz
  */
 public abstract class FileBuilder {
+
     String name;
     String path;
-    String extention;
-    
-    
+    String extension;
+
     public abstract void buildFile();
-    
+
 //    public abstract String addCellValue(String s);
-    
-    public abstract String FileHeader ();
-    
-    public abstract String FileFinal ();
-    
-    public static FileBuilder getBuilder(String ext){
-    switch(ext){
-        case "csv": return new CSVBuilder();
-        case "xml": return new XMLBuilder();
-        case "html": return new HTMLBuilder();
-        default: return null;
-    }       
-    };
+
+    public abstract String FileHeader();
+
+    public abstract String FileFinal();
+
+    public static FileBuilder getBuilder(String ext) {
+        switch (ext) {
+            case "csv":
+                return new CSVBuilder();
+            case "xml":
+                return new XMLBuilder();
+            case "html":
+                return new HTMLBuilder();
+            case "bin": 
+                return new BINBuilder();
+            default:
+                return null;
+        }
+    }
   
-    public Cell[][]getMatrixinfo(){
-    return Spreadsheet.getSpreadsheet().getMatrix();
+    public Cell[][] getMatrixinfo() {
+        return Spreadsheet.getSpreadsheet().getMatrix();
     }
 
     public void setName(String name) {
@@ -47,10 +53,8 @@ public abstract class FileBuilder {
         this.path = path;
     }
 
-    public void setExtention(String extention) {
-        this.extention = extention;
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
-    
-    
-    
+
 }

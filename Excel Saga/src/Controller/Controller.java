@@ -5,9 +5,12 @@
  */
 package Controller;
 
+import Command.Command;
 import LoadFiles.FileAdapter;
 import LoadFiles.SagaFile;
 import Command.CommandManager;
+import Command.EditCell;
+import SaveFile.FileBuilder;
 import ViewMode.NormalViewMode;
 import ViewMode.StrategyViewMode;
 import java.io.File;
@@ -43,37 +46,50 @@ public class Controller {
 
     ;
     
-    public void download() {
+    public void export(String extension) {
+        
+        FileBuilder fb = FileBuilder.getBuilder(extension);
+        fb.setName("TEMP");
+        fb.buildFile();
     }
-    
-    public void setCellValue(int column, int row, String value) {
-        spreadsheet.setCellValue(new Position(row, column), value);
 
+    public void setCellValue(int column, int row, String value) {
+
+        //spreadsheet.setCellValue(new Position(row, column), value);
         //aqui é que deve guardar?
         //cria comando
-        //Command cmd = new EditCell(new Position(column, row),value);
-        //Cmg.applyCommand(cmd);
+        Position p = new Position(column, row);
+        Command cmd = new EditCell(p, value, spreadsheet.getCellValue(p));
+        Cmg.applyCommand(cmd);
+    }
+
+    public void redo() {
+        Cmg.Redo();
+    }
+
+    public void undo() {
+        Cmg.Undo();
     }
 
     public String[][] getMatrix() {
-        
+
         StrategyViewMode s = new NormalViewMode();
 
         return s.viewSpreadsheet();
     }
-    
-    public ArrayList<utils.Filter> getFilters(Position p){
+
+    public ArrayList<utils.Filter> getFilters(Position p) {
         return spreadsheet.getFilters(p);
     }
 
     public void applyFilter(Position p, Filter filter, String filterValue) {
         spreadsheet.applyFilter(p, filter, filterValue);
     }
-    
+
     public void removeFilter(Position p, Filter filter) {
         spreadsheet.removeFilter(p, filter);
     }
-        
+
     public File OpenFile() {
 
         return null;

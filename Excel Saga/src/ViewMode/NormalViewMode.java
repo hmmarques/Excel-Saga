@@ -34,8 +34,8 @@ public class NormalViewMode implements StrategyViewMode {
                 
                 if (1 == 1) {
                     FactoryCalculations f = FactoryCalculations.createFactory("SOMA");
-                    f.setvalue1;
-                    f.setvalue2;
+//                    f.setvalue1;
+//                    f.setvalue2;
                     f.calculate();
                     
                 }

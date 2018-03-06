@@ -11,9 +11,10 @@ package Operations;
  */
 public class Add extends FactoryCalculations{
 
+
     @Override
-    int calculate() {
-        return this.value1 + this.value2;
+    String operations(String value1, String value2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
