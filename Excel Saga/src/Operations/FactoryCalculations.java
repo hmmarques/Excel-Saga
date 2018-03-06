@@ -14,7 +14,7 @@ import java.util.List;
  */
 public abstract class FactoryCalculations {
         
-    ArrayList<String> value;
+    ArrayList<String> value = new ArrayList<String>();
     String op;
     
     public static FactoryCalculations createFactory(String operation) //fábrica de objectos
@@ -40,10 +40,8 @@ public abstract class FactoryCalculations {
     }
     public FactoryCalculations addValue(String val){
         
-        if(this.value == null || this.value.size()==0){
-            this.value = new ArrayList<String>();
-        }
         this.value.add(val);
+        
         return this;
     }
     
