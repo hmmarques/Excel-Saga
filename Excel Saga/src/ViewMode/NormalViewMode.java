@@ -5,9 +5,11 @@
  */
 package ViewMode;
 
+import Operations.FactoryCalculations;
 import logic.Spreadsheet;
 import utils.Constants;
 import utils.Position;
+
 
 /**
  *
@@ -29,6 +31,14 @@ public class NormalViewMode implements StrategyViewMode {
         for (int i = 0; i < Constants.N_ROWS; i++) {
             for (int j = 0; j < Constants.N_COLUMNS; j++) {
                 m[i][j] = spreadsheet.getCellValue(new Position(i, j));
+                
+                if (1 == 1) {
+                    FactoryCalculations f = FactoryCalculations.createFactory("SOMA");
+                    f.setvalue1;
+                    f.setvalue2;
+                    f.calculate();
+                    
+                }
             }
         }
         return m;

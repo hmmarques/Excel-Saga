@@ -651,8 +651,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
 //            
 //        }
         //this.updateTable();
-       
-        
+
 
     }//GEN-LAST:event_BTNchooseFileMouseClicked
 
@@ -715,9 +714,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
         rowAux = jTable1.getSelectedRow();
         columnAux = jTable1.getSelectedColumn(); 
-        
-//        this.columnAux = this.column;
-//        this.rowAux = this.row;   
+          
 
     }//GEN-LAST:event_TxtAreaformFocusGained
 
