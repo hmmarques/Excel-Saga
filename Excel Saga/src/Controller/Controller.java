@@ -60,7 +60,7 @@ public class Controller {
         //spreadsheet.setCellValue(new Position(row, column), value);
         //aqui é que deve guardar?
         //cria comando
-        Position p = new Position(column, row);
+        Position p = new Position(row, column);
         Command cmd = new EditCell(p, value, spreadsheet.getCellValue(p));
         Cmg.applyCommand(cmd);
     }
