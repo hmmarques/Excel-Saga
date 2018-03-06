@@ -40,6 +40,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
         controlTxtAreaform = true;
         initComponents();
         controller = new Controller();
+        JRNormal.setSelected(true);
 
         jTable1.getModel().addTableModelListener((e) -> {
             if (!overlookTableListener) {
@@ -562,10 +563,24 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void JRNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRNormalActionPerformed
         // TODO add your handling code here:
+        if(JRNormal.isSelected()){
+            JRFunctional.setSelected(false);
+            controller.setView("normal");
+        }else{
+            JRFunctional.setSelected(true);
+        }
+        this.updateTable();
     }//GEN-LAST:event_JRNormalActionPerformed
 
     private void JRFunctionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRFunctionalActionPerformed
         // TODO add your handling code here:
+        if(JRFunctional.isSelected()){
+            JRNormal.setSelected(false);
+            controller.setView("functional");
+        }else{
+            JRNormal.setSelected(true);
+        }
+        this.updateTable();
     }//GEN-LAST:event_JRFunctionalActionPerformed
 
     private void JCBUppercaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBUppercaseActionPerformed

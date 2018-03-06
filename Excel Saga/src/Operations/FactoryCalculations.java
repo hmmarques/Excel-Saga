@@ -5,13 +5,21 @@
  */
 package Operations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author joao
  */
 public abstract class FactoryCalculations {
+        
+    ArrayList<String> value;
+    String op;
+    
     public static FactoryCalculations createFactory(String operation) //fábrica de objectos
     {
+       
         switch (operation.toUpperCase()) {
                 case "SOMA":
                     return new Add();
@@ -23,15 +31,25 @@ public abstract class FactoryCalculations {
         return null;
     }
     
-    abstract String operations(String value1, String value2);
+    abstract String operations(ArrayList<String> value);
     
     public String calculate(){
+            
+        return operations(value);  
         
-        operations(value1,value2);   
+    }
+    public FactoryCalculations addOp(String op){
+        this.op = op;
+        return this;
+    }
+    public FactoryCalculations addValue(String op){
         
-        return null;
+        if(this.value == null || this.value.size()==0){
+            this.value = new ArrayList<String>();
+        }
+        
+        this.value.add(op);
+        return this;
     }
     
-    String value1;
-    String value2;
 };

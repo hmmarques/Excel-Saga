@@ -5,6 +5,8 @@
  */
 package Operations;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author joao
@@ -14,8 +16,15 @@ public class Multiple extends FactoryCalculations{
 
 
     @Override
-    String operations(String value1, String value2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String operations(ArrayList<String> value) {
+        double res=1;
+        
+        for (int i = 0; i < value.size(); i++) {
+            
+            res *= Integer.parseInt(value.get(i));
+        }
+        
+        return String.valueOf(res);
     }
     
 }
