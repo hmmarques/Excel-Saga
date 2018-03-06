@@ -269,6 +269,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 BTNcsvMouseClicked(evt);
             }
         });
+        BTNcsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNcsvActionPerformed(evt);
+            }
+        });
 
         BTNxml.setText("XML");
         BTNxml.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -446,6 +451,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
         });
 
         jButton1.setText("Undo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Redo");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -725,8 +735,18 @@ public class InterfaceSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        controller.redo();
+        updateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        controller.undo();
+        updateTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BTNcsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcsvActionPerformed
+        controller.export("csv");
+    }//GEN-LAST:event_BTNcsvActionPerformed
 
     /**
      * @param args the command line arguments

@@ -77,8 +77,8 @@ public class CSVFile extends FileType {
         return col <= Constants.N_COLUMNS;
     }
 
-    public boolean Verify_Rows(int raw) {
-        return raw <= Constants.N_ROWS;
+    public boolean Verify_Rows(int row) {
+        return row <= Constants.N_ROWS;
     }
 
     @Override
