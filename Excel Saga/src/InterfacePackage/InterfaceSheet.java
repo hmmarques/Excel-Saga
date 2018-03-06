@@ -51,8 +51,10 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 TxtAreaform.setText(jTable1.getModel().getValueAt(row, column).toString());
                 overlookTableListener = true;
                 jTable1.getModel().setValueAt(controller.getCellValue(new Position(row, column)), row, column);
+                this.updateTable();
             }
             overlookTableListener = false;
+            
         });
 
         TxtAreaform.getDocument().addDocumentListener(new DocumentListener() {

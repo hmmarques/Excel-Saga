@@ -20,7 +20,7 @@ public class Add extends FactoryCalculations{
         
         for (int i = 0; i < value.size(); i++) {
             
-            res += Integer.parseInt(value.get(i));
+            res += Double.parseDouble(value.get(i));
         }
         
         return String.valueOf(res);

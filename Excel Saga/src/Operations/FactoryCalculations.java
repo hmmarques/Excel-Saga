@@ -38,17 +38,12 @@ public abstract class FactoryCalculations {
         return operations(value);  
         
     }
-    public FactoryCalculations addOp(String op){
-        this.op = op;
-        return this;
-    }
-    public FactoryCalculations addValue(String op){
+    public FactoryCalculations addValue(String val){
         
         if(this.value == null || this.value.size()==0){
             this.value = new ArrayList<String>();
         }
-        
-        this.value.add(op);
+        this.value.add(val);
         return this;
     }
     
