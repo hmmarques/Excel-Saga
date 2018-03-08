@@ -6,6 +6,12 @@
 package LoadFiles;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import logic.Spreadsheet;
+import utils.Constants;
 
 /**
  *
@@ -13,12 +19,38 @@ import java.io.File;
  */
 public class BINFile extends FileType{
 
-    
-    
-    
     @Override
     public void readFileType(File f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String aux_matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
+        try {
+
+            FileInputStream ios = new FileInputStream(f);
+            ObjectInputStream ois = new ObjectInputStream(ios);
+
+            String validate = (String) ois.readObject();
+
+            for (int i = 0; i < Constants.N_ROWS; i++) {
+                for (int j = 0; j < Constants.N_COLUMNS; j++) {
+                    aux_matrix[i][j] = (String) ois.readObject();
+                }
+            }
+
+            ios.close();
+            ois.close();
+
+            if (validate.equals(Constants.CODE)) {
+                Spreadsheet sp = Spreadsheet.getSpreadsheet();
+                sp.setMatriz(aux_matrix);
+            } else {
+                System.out.println("File .bin not allowed");
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("fILE NOT FOUND!");
+            //e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            //e.printStackTrace();
+        }
     }
     
 }

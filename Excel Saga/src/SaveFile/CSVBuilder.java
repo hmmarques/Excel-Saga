@@ -22,15 +22,10 @@ public class CSVBuilder extends FileBuilder {
 
     FileWriter fileWriter = null;
     //CSV file header
-//    private static final String FILE_HEADER = "id,firstName,lastName,gender,age";
 
     public CSVBuilder() {
         super.setExtension(".csv");
     }
-    
-    
-    
-    
 
     @Override
     public void buildFile() {
@@ -41,15 +36,11 @@ public class CSVBuilder extends FileBuilder {
             System.out.print("matrix nulla ao tentar criar o ficheiro CSV");
             return;
         }
-        
+
         try {
 
             fileWriter = new FileWriter(name + extension);
 
-            //Write the CSV file header
-//            fileWriter.append(FileHeader());
-            //Add a new line separator after the header
-            //Write a cell to the CSV file
             for (int i = 0; i < Constants.N_ROWS; i++) {
                 if (i != 0) {
                     fileWriter.append(NEW_LINE_SEPARATOR);
@@ -62,7 +53,6 @@ public class CSVBuilder extends FileBuilder {
                         fileWriter.append(DELIMITER);
                         fileWriter.append(aux_Matrix[i][y]);
                     }
-
                 }
             }
 

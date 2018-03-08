@@ -18,4 +18,5 @@ public class Constants {
     
     public static int N_ROWS = 100;
     public static int N_COLUMNS = 25;
+    public static String CODE = "validate_67352";
 }

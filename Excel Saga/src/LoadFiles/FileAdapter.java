@@ -28,12 +28,8 @@ public class FileAdapter implements SagaFile {
         if (ft != null) {
             ft.readFileType(f);
         } else {
-            System.out.println("deu erro ao abrir o ficheiro!");
+            System.out.println("ERROR when opening file!");
         }
-
-//        CSVf.ReadCSVFile(OpenFile(path));
-//        XMLf.ReadXMLFile(OpenFile(path));
-//        HTMLf.ReadHTMLFile(OpenFile(path));
     }
 
 }

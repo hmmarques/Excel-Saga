@@ -5,9 +5,9 @@
  */
 package LoadFiles;
 
-import LoadFiles.XMLFile;
 import java.io.File;
 import java.util.StringTokenizer;
+import utils.Constants;
 
 /**
  *
@@ -20,26 +20,35 @@ public abstract class FileType {
         //o objeto correspondente para descodificar o ficheiro para a spreadsheet
 
         int cont = 0;
-        String extention = "";
+        String extension = "";
         StringTokenizer token;
-        // String[] parts = s.split(".");
 
-        //String[] parts = s.split(".",-1);
         token = new StringTokenizer(s, ".");
         while (token.hasMoreTokens()) {
-            extention = token.nextToken();
+            extension = token.nextToken();
         }
 
-        if (extention.equals("xml")) {
-            return new XMLFile();
-        } else if (extention.equals("csv")) {
-            return new CSVFile();
-        } else if (extention.equals("html")) {
-            return new HTMLFile();
-        } else {
-            return null;
+        switch (extension) {
+            case "xml":
+                return new XMLFile();
+            case "csv":
+                return new CSVFile();
+            case "html":
+                return new HTMLFile();
+            case "bin":
+                return new BINFile();
+            default:
+                return null;
         }
     }
 
     public abstract void readFileType(File f);
+    
+    public boolean Verify_Cols(int col) {
+        return col <= Constants.N_COLUMNS;
+    }
+
+    public boolean Verify_Rows(int raw) {
+        return raw <= Constants.N_ROWS;
+    }
 }

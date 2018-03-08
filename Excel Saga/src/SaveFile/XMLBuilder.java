@@ -5,7 +5,6 @@
  */
 package SaveFile;
 
-import java.io.File;
 
 /**
  *
@@ -13,6 +12,12 @@ import java.io.File;
  */
 public class XMLBuilder extends FileBuilder{
 
+    public XMLBuilder() {
+        super.setExtension(".xml");
+    }
+
+    
+    
     @Override
     public void buildFile() {
        System.out.println("build file (XML)");
