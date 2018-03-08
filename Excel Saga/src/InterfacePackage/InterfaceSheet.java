@@ -26,6 +26,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
     private boolean overlookTableListener;
     private String cmdAux;
     private boolean controlTxtAreaform;
+    private boolean insertedTextOnTxtArea = false;
     /**
      * Creates new form InterfaceSheet
      */
@@ -40,78 +41,82 @@ public class InterfaceSheet extends javax.swing.JFrame {
         controlTxtAreaform = true;
         initComponents();
         controller = new Controller();
+        JRNormal.setSelected(true);
 
         jTable1.getModel().addTableModelListener((e) -> {
             if (!overlookTableListener) {
+                System.out.println("row-> " + row + "  Column->" + column);
+                System.out.println("rowAux-> " + rowAux + "  ColumnAux->" + columnAux);
                 controller.setCellValue(column, row, jTable1.getModel().getValueAt(row, column).toString());
                 TxtAreaform.setText(jTable1.getModel().getValueAt(row, column).toString());
                 overlookTableListener = true;
                 jTable1.getModel().setValueAt(controller.getCellValue(new Position(row, column)), row, column);
+                this.updateTable();
             }
             overlookTableListener = false;
+            
         });
-        
+
         TxtAreaform.getDocument().addDocumentListener(new DocumentListener() {
 
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            
-            if(controlTxtAreaform){
-                cmdAux = TxtAreaform.getText();
-                System.out.println("removeUpdate: " + cmdAux);
-                System.out.println("col: " + column + "  row: " + row);
-                System.out.println("colAux: " + columnAux + "  rowAux: " + rowAux);
-                
-                if(rowAux != -1 && columnAux != -1){
-                    controller.setCellValue(columnAux, rowAux, cmdAux);
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+
+                if (controlTxtAreaform) {
+                    cmdAux = TxtAreaform.getText();
+                    System.out.println("removeUpdate: " + cmdAux);
+                    System.out.println("col: " + column + "  row: " + row);
+                    System.out.println("colAux: " + columnAux + "  rowAux: " + rowAux);
+
+                    if (rowAux != -1 && columnAux != -1) {
+                        controller.setCellValue(columnAux, rowAux, cmdAux);
+                    }
                 }
             }
-        }
 
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            if(controlTxtAreaform){
-                cmdAux = TxtAreaform.getText();
-                System.out.println("insertUpdate: " + cmdAux);
-                System.out.println("col: " + column + "  row: " + row);
-                System.out.println("colAux: " + columnAux + "  rowAux: " + rowAux);
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if (controlTxtAreaform) {
+                    cmdAux = TxtAreaform.getText();
+                    System.out.println("insertUpdate: " + cmdAux);
+                    System.out.println("col: " + column + "  row: " + row);
+                    System.out.println("colAux: " + columnAux + "  rowAux: " + rowAux);
 
+                    if (rowAux != -1 && columnAux != -1) {
+                        controller.setCellValue(columnAux, rowAux, cmdAux);
+                    }
+                    insertedTextOnTxtArea = true;
+                }
 
-                if(rowAux != -1 && columnAux != -1){
-                    controller.setCellValue(columnAux, rowAux, cmdAux);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                if (controlTxtAreaform) {
+                    cmdAux = TxtAreaform.getText();
+                    System.out.println("changedUpdate: " + cmdAux);
+
+                    if (rowAux != -1 && columnAux != -1) {
+                        controller.setCellValue(columnAux, rowAux, cmdAux);
+                    }
                 }
             }
-            
-        }
 
-        @Override
-        public void changedUpdate(DocumentEvent arg0) {
-            if(controlTxtAreaform){
-                cmdAux = TxtAreaform.getText();
-                System.out.println("changedUpdate: " + cmdAux);
+        });
 
-                if(rowAux != -1 && columnAux != -1){
-                    controller.setCellValue(columnAux, rowAux, cmdAux);
-                }
-            }
-        }
-
-    });
-        
     }
 
     public void updateTable() {
         String[][] matrix = controller.getMatrix();
-       // System.out.println("res = "+matrix[0][0]);
-        
+        // System.out.println("res = "+matrix[0][0]);
+
         for (int i = 0; i < Constants.N_ROWS; i++) {
             for (int j = 0; j < Constants.N_COLUMNS; j++) {
                 overlookTableListener = true;
                 jTable1.getModel().setValueAt(matrix[i][j], i, j);
             }
         }
-        
-        
+
     }
 
     public void updateFilters() {
@@ -562,10 +567,24 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void JRNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRNormalActionPerformed
         // TODO add your handling code here:
+        if (JRNormal.isSelected()) {
+            JRFunctional.setSelected(false);
+            controller.setView("normal");
+        } else {
+            JRFunctional.setSelected(true);
+        }
+        this.updateTable();
     }//GEN-LAST:event_JRNormalActionPerformed
 
     private void JRFunctionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRFunctionalActionPerformed
         // TODO add your handling code here:
+        if (JRFunctional.isSelected()) {
+            JRNormal.setSelected(false);
+            controller.setView("functional");
+        } else {
+            JRNormal.setSelected(true);
+        }
+        this.updateTable();
     }//GEN-LAST:event_JRFunctionalActionPerformed
 
     private void JCBUppercaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBUppercaseActionPerformed
@@ -600,12 +619,10 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void JRNormalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRNormalMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Radio Normal");
     }//GEN-LAST:event_JRNormalMouseClicked
 
     private void JRFunctionalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRFunctionalMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Radio Functional");
     }//GEN-LAST:event_JRFunctionalMouseClicked
 
     private void JCBUppercaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JCBUppercaseMouseClicked
@@ -643,23 +660,20 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void BTNxmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNxmlMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Xml Button Pressed");
     }//GEN-LAST:event_BTNxmlMouseClicked
 
     private void BTNchooseFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNchooseFileMouseClicked
 
         ChooseFile face = new ChooseFile(this);
-        face.setVisible (true);
+        face.setVisible(true);
     }//GEN-LAST:event_BTNchooseFileMouseClicked
 
     private void BTNhtmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNhtmlMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Html Button Pressed");
     }//GEN-LAST:event_BTNhtmlMouseClicked
 
     private void BTNcsvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNcsvMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Csv Button Pressed");
     }//GEN-LAST:event_BTNcsvMouseClicked
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -669,9 +683,9 @@ public class InterfaceSheet extends javax.swing.JFrame {
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
 
-                controlTxtAreaform = false;
-                TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
-                controlTxtAreaform = true;
+                //controlTxtAreaform = false;
+                //TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+                //controlTxtAreaform = true;
             }
         });
 
@@ -695,14 +709,17 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void TxtAreaformFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusLost
         // TODO add your handling code here:
-      // controlTxtAreaform = true;
-        System.out.println("row: " +row);
+        // controlTxtAreaform = true;
+        System.out.println("row: " + row);
         System.out.println("column:" + column);
-        System.out.println("rowAux: "+rowAux);
-        System.out.println("columnAux: "+columnAux);
-        System.out.println("re: "+cmdAux);
-        controller.setCellValue(columnAux, rowAux, cmdAux);
-       // this.updateTable();
+        System.out.println("rowAux: " + rowAux);
+        System.out.println("columnAux: " + columnAux);
+        System.out.println("re: " + cmdAux);
+        System.out.println("re:" + jTable1.getModel().getValueAt(rowAux, columnAux).toString());
+        if (insertedTextOnTxtArea) {
+            controller.setCellValue(columnAux, rowAux, cmdAux);
+            insertedTextOnTxtArea = false;
+        }
 
         this.updateTable();
     }//GEN-LAST:event_TxtAreaformFocusLost
@@ -710,7 +727,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
     private void TxtAreaformFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusGained
 
         rowAux = jTable1.getSelectedRow();
-        columnAux = jTable1.getSelectedColumn();   
+        columnAux = jTable1.getSelectedColumn();
     }//GEN-LAST:event_TxtAreaformFocusGained
 
     private void TxtAreaformMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtAreaformMouseClicked
@@ -727,6 +744,12 @@ public class InterfaceSheet extends javax.swing.JFrame {
         row = jTable1.getSelectedRow();
         column = jTable1.getSelectedColumn();
 
+        controlTxtAreaform = false;
+        TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+        controlTxtAreaform = true;
+
+        System.out.println("row-> " + row + "  Column->" + column);
+        System.out.println("rowAux-> " + rowAux + "  ColumnAux->" + columnAux);
         updateFilters();
     }//GEN-LAST:event_jTable1MousePressed
 

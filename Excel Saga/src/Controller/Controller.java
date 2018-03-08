@@ -11,6 +11,7 @@ import LoadFiles.SagaFile;
 import Command.CommandManager;
 import Command.EditCell;
 import SaveFile.FileBuilder;
+import ViewMode.FunctionalViewMode;
 import ViewMode.NormalViewMode;
 import ViewMode.StrategyViewMode;
 import java.io.File;
@@ -29,6 +30,7 @@ public class Controller {
     Spreadsheet spreadsheet;
     CommandManager Cmg;
     SagaFile SFile;
+    StrategyViewMode s = new NormalViewMode();
 
     public Controller() {
         this.spreadsheet = Spreadsheet.getSpreadsheet();
@@ -58,7 +60,7 @@ public class Controller {
         //spreadsheet.setCellValue(new Position(row, column), value);
         //aqui é que deve guardar?
         //cria comando
-        Position p = new Position(column, row);
+        Position p = new Position(row, column);
         Command cmd = new EditCell(p, value, spreadsheet.getCellValue(p));
         Cmg.applyCommand(cmd);
     }
@@ -72,12 +74,18 @@ public class Controller {
     }
 
     public String[][] getMatrix() {
-
-        StrategyViewMode s = new NormalViewMode();
-
         return s.viewSpreadsheet();
     }
-
+    
+    public void setView(String view){
+        
+        if(view.equals("normal")){
+            s = new NormalViewMode();
+        }
+        else{
+            s = new FunctionalViewMode();
+        }
+    }
     public ArrayList<utils.Filter> getFilters(Position p) {
         return spreadsheet.getFilters(p);
     }
@@ -98,5 +106,7 @@ public class Controller {
     public String getCellValue(Position position) {
         return spreadsheet.getCellValue(position);
     }
+    
+    
 
 }
