@@ -5,10 +5,9 @@
  */
 package SaveFile;
 
-import java.io.File;
+
 import java.io.FileWriter;
 import java.io.IOException;
-import logic.Cell;
 import utils.Constants;
 
 /**
@@ -25,18 +24,27 @@ public class CSVBuilder extends FileBuilder {
     //CSV file header
 //    private static final String FILE_HEADER = "id,firstName,lastName,gender,age";
 
+    public CSVBuilder() {
+        super.setExtension(".csv");
+    }
+    
+    
+    
+    
+
     @Override
     public void buildFile() {
         System.out.println("build file (CSV)");
 
-        Cell aux_Matrix[][] = getMatrixinfo();
+        String aux_Matrix[][] = getMatrixinfo();
         if (aux_Matrix == null) {
             System.out.print("matrix nulla ao tentar criar o ficheiro CSV");
             return;
         }
+        
         try {
 
-            fileWriter = new FileWriter(name + ".csv");
+            fileWriter = new FileWriter(name + extension);
 
             //Write the CSV file header
 //            fileWriter.append(FileHeader());
@@ -49,10 +57,10 @@ public class CSVBuilder extends FileBuilder {
 
                 for (int y = 0; y < Constants.N_COLUMNS; y++) {
                     if (y == 0) {
-                        fileWriter.append(aux_Matrix[i][y].getValue());
+                        fileWriter.append(aux_Matrix[i][y]);
                     } else {
                         fileWriter.append(DELIMITER);
-                        fileWriter.append(aux_Matrix[i][y].getValue());
+                        fileWriter.append(aux_Matrix[i][y]);
                     }
 
                 }

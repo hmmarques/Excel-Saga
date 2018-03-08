@@ -29,12 +29,15 @@ public class HTMLBuilder extends FileBuilder{
     
     FileWriter fileWriter = null;
 
+    public HTMLBuilder() {
+        super.setExtension(".html");
+    }
 
     @Override
     public void buildFile() {
        System.out.println("build file (HTML)");
        
-       Cell aux_Matrix[][] = getMatrixinfo();
+       String aux_Matrix[][] = getMatrixinfo();
        if(aux_Matrix == null){
           System.out.print("matrix nula ao tentar criar o ficheiro HTML");
            return;
@@ -63,7 +66,7 @@ public class HTMLBuilder extends FileBuilder{
                 for (int y = 0;y<Constants.N_COLUMNS;y++)
                 {
                 fileWriter.append(OPEN_TAG_TD);
-                fileWriter.append(aux_Matrix[i][y].getValue());
+                fileWriter.append(aux_Matrix[i][y]);
                 fileWriter.append(CLOSE_TAG_TD);
                 fileWriter.append(NEW_LINE_SEPARATOR);
 

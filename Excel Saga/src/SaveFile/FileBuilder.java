@@ -7,6 +7,7 @@ package SaveFile;
 
 import logic.Cell;
 import logic.Spreadsheet;
+import utils.Constants;
 
 /**
  *
@@ -41,8 +42,16 @@ public abstract class FileBuilder {
         }
     }
   
-    public Cell[][] getMatrixinfo() {
-        return Spreadsheet.getSpreadsheet().getMatrix();
+    public String[][] getMatrixinfo() {
+        String matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
+        
+       for(String[] linha : matrix){
+        for(int i = 0; i<Constants.N_COLUMNS;i++ ){
+        linha[i] = Spreadsheet.getSpreadsheet().getMatrix()[1][1].getValue();
+        }
+       }       
+
+        return matrix;
     }
 
     public void setName(String name) {
