@@ -728,6 +728,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
         rowAux = jTable1.getSelectedRow();
         columnAux = jTable1.getSelectedColumn();
+        cmdAux = jTable1.getModel().getValueAt(rowAux, columnAux).toString();
     }//GEN-LAST:event_TxtAreaformFocusGained
 
     private void TxtAreaformMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtAreaformMouseClicked
