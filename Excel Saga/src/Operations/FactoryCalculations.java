@@ -23,8 +23,18 @@ public abstract class FactoryCalculations {
         switch (operation.toUpperCase()) {
                 case "SOMA":
                     return new Add();
-                case "MULTIPLE":
+                case "SUBTRAIR":
+                    return new Subtraction();
+                case "PRODUTO":
                     return new Multiple();
+                case "NUMERO":
+                    return new Number();
+                case "MAIUSCULAS":
+                    return new CapitalLetters();
+                case "MINUSCULAS":
+                    return new Lowercase();
+                case "COPIA":
+                    return new Copy();
                 default:
         }
         

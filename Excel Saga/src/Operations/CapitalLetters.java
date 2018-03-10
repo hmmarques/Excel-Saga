@@ -11,24 +11,16 @@ import java.util.ArrayList;
  *
  * @author joao
  */
-public class Multiple extends FactoryCalculations{
-
-
+public class CapitalLetters extends FactoryCalculations{
 
     @Override
     String operations(ArrayList<String> value) {
-        double res=1;
         
-        for (int i = 0; i < value.size(); i++) {
-            if(value.get(i).isEmpty()){
-                res *= 1;
-            }else{
-                res *= Integer.parseInt(value.get(i));  
-            }
-            
+        if(value.size() > 1){
+            return "#ERROR";
         }
-        
-        return String.valueOf(res);
+        return value.get(0).toUpperCase();
     }
     
 }
+

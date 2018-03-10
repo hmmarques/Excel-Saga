@@ -11,21 +11,23 @@ import java.util.ArrayList;
  *
  * @author joao
  */
-public class Multiple extends FactoryCalculations{
-
+public class Subtraction  extends FactoryCalculations{
 
 
     @Override
     String operations(ArrayList<String> value) {
-        double res=1;
+        double res=0;
         
         for (int i = 0; i < value.size(); i++) {
             if(value.get(i).isEmpty()){
-                res *= 1;
+                res -= 0;
             }else{
-                res *= Integer.parseInt(value.get(i));  
+                if(i==0){
+                    res = Double.parseDouble(value.get(i));
+                }else{
+                    res -= Double.parseDouble(value.get(i));
+                }      
             }
-            
         }
         
         return String.valueOf(res);

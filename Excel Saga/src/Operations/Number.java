@@ -6,29 +6,28 @@
 package Operations;
 
 import java.util.ArrayList;
+import logic.Spreadsheet;
+import utils.Position;
 
 /**
  *
  * @author joao
  */
-public class Multiple extends FactoryCalculations{
-
+public class Number extends FactoryCalculations{
 
 
     @Override
     String operations(ArrayList<String> value) {
-        double res=1;
+      
         
-        for (int i = 0; i < value.size(); i++) {
-            if(value.get(i).isEmpty()){
-                res *= 1;
-            }else{
-                res *= Integer.parseInt(value.get(i));  
-            }
-            
+        if(value.size() > 1){
+            return "#ERROR";
         }
-        
-        return String.valueOf(res);
+        if(value.isEmpty()){
+            return "#ERROR";
+        }
+        return String.valueOf(Double.parseDouble(value.get(0)));
+    
     }
     
 }

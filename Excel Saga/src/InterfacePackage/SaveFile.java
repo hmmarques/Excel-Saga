@@ -69,8 +69,8 @@ public class SaveFile extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         if (evt.getActionCommand().equals(javax.swing.JFileChooser.APPROVE_SELECTION)) {
+            
             System.out.println("Save File");
-
             File fileToSave = jFileSave.getSelectedFile();
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
 

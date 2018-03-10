@@ -5,6 +5,9 @@
  */
 package ViewMode;
 
+import Operations.Add;
+import Operations.CapitalLetters;
+import Operations.Copy;
 import Operations.FactoryCalculations;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,32 +67,81 @@ public class NormalViewMode implements StrategyViewMode {
     public String resolveFuntion(String cmd){
         
         StringTokenizer st = new StringTokenizer(cmd);
+        StringTokenizer st2;
         List<String> values = new ArrayList<String>();
+        List<String> values2 = new ArrayList<String>();
         FactoryCalculations f;
+        FactoryCalculations ff;
+        String valueCoordinate;
         int i = 0;
+        int ii = 0;
         
         while (st.hasMoreTokens()) {
             if(i==0){
                 values.add(st.nextToken().substring(1));
                 i=1;
+            }else{
+                values.add(st.nextToken());
             }
-            values.add(st.nextToken());
         }
         
+        if (values.size()==1){
+            return "#ERROR";
+        }
         
         f = FactoryCalculations.createFactory(values.get(0));
         
-        for (int j = 1; j < values.size(); j++) {
-            
-            if(verifyIsNumber(values.get(j))){
-                f.addValue(values.get(j));
-            }else{
-                f.addValue(valueOfCoordinate(values.get(j)));
+        if(f!=null){
+            for (int j = 1; j < values.size(); j++) {
+
+                if(verifyIsNumber(values.get(j))){
+                    f.addValue(values.get(j));
+                } else if (verifyIfFunction(valueOfCoordinate(values.get(j)))) {
+                    ii = 0;
+                    System.out.println("value: " + values.get(j));
+                    st2 = new StringTokenizer(valueOfCoordinate(values.get(j)));
+                    while (st2.hasMoreTokens()) {
+                        //System.out.println("- " + st2.nextToken());
+                        if (ii == 0) {
+                            values2.add(st2.nextToken().substring(1));
+                            ii = 1;
+                        }
+                        values2.add(st2.nextToken());
+                    }
+                    for (int k = 1; k < values2.size(); k++) {
+                        if (verifyIsNumber(values2.get(k))) {
+                            f.addValue(values2.get(k));
+                        } else {
+                            f.addValue(valueOfCoordinate(values2.get(k)));
+                        }
+                    }
+                } else {
+                    valueCoordinate = valueOfCoordinate(values.get(j));
+                    if(verifyIsNumber(valueCoordinate)){
+                        f.addValue(valueCoordinate);
+                    }else{
+                        if(f instanceof Copy){
+                            f.addValue(valueCoordinate);
+                        }
+                    }
+                    if(f instanceof CapitalLetters){
+                        f.addValue(valueCoordinate);
+                    }
+                    if(f instanceof Add){
+                        if (cmd.contains(":")) {
+                            f.addValue(values.get(j));
+                        }
+                    }
+                }
+
             }
-            
+
+            return f.calculate();
+        }
+        else{
+            return "#ERROR";
         }
         
-        return f.calculate();
     }
     
     public static boolean verifyIsNumber(String str) {
@@ -100,6 +152,7 @@ public class NormalViewMode implements StrategyViewMode {
         }
         return true;
     }
+
     
     public String valueOfCoordinate(String cmd){
         String line;
@@ -108,7 +161,19 @@ public class NormalViewMode implements StrategyViewMode {
         col = cmd.substring(1);
         line = String.valueOf(cmd.charAt(0));
         
-        return spreadsheet.getCellValue(new Position(Integer.parseInt(col), this.charCoordinate.get(line)));
+        if(!verifyIsNumber(col)){
+            return "#ERROR";
+        }
+        if(!this.charCoordinate.containsKey(line.toUpperCase())){
+           return "#ERROR"; 
+        }
+        
+        if(col.isEmpty() || line.isEmpty() || col == null || line ==null){
+            return "";
+        }else{
+            return spreadsheet.getCellValue(new Position(Integer.parseInt(col), this.charCoordinate.get(line.toUpperCase())));
+        }
+            
         //return null;
     }
     
