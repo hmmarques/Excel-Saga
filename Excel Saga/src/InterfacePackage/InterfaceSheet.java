@@ -673,6 +673,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void BTNxmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNxmlMouseClicked
         // TODO add your handling code here:
+        controller.export("xml");
     }//GEN-LAST:event_BTNxmlMouseClicked
 
     private void BTNchooseFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNchooseFileMouseClicked
@@ -683,10 +684,12 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     private void BTNhtmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNhtmlMouseClicked
         // TODO add your handling code here:
+        controller.export("html");
     }//GEN-LAST:event_BTNhtmlMouseClicked
 
     private void BTNcsvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNcsvMouseClicked
         // TODO add your handling code here:
+        controller.export("csv");
     }//GEN-LAST:event_BTNcsvMouseClicked
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
