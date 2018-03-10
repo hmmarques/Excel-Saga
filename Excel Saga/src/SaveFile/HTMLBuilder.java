@@ -40,8 +40,8 @@ public class HTMLBuilder extends FileBuilder{
             return;
         }
         try {
-
-            fileWriter = new FileWriter(name);
+            System.out.println("Building the html file !!!");
+            fileWriter = new FileWriter(name + extension);
 
             //Write the HTML file header
             fileWriter.append(FileHeader());
@@ -103,7 +103,7 @@ public class HTMLBuilder extends FileBuilder{
     @Override
     public String FileFinal() {
         String s;
-        s = "</table> /n </body> /n </html>";
+        s = "</table> \n </body> \n </html>";
 
         return s;
     }

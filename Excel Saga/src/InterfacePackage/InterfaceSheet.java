@@ -667,7 +667,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_JRNegativeMouseClicked
 
     private void BTNxmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNxmlMouseClicked
-        // TODO add your handling code here:
+         System.out.println("calling the FileBuilder to save the file in xml");
+         controller.export("xml");
     }//GEN-LAST:event_BTNxmlMouseClicked
 
     private void BTNchooseFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNchooseFileMouseClicked
@@ -677,7 +678,9 @@ public class InterfaceSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_BTNchooseFileMouseClicked
 
     private void BTNhtmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNhtmlMouseClicked
-        // TODO add your handling code here:
+         System.out.println("calling the FileBuilder to save the file in html");
+         controller.export("html");        
+// TODO add your handling code here:
     }//GEN-LAST:event_BTNhtmlMouseClicked
 
     private void BTNcsvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNcsvMouseClicked
