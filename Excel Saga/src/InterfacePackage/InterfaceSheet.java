@@ -716,7 +716,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String teste = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
-            JOptionPane.showMessageDialog(null, teste);
+            //JOptionPane.showMessageDialog(null, teste);
+            
 
         }
 
