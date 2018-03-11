@@ -5,6 +5,8 @@
  */
 package SaveFile;
 
+import ViewMode.NormalViewMode;
+import ViewMode.StrategyViewMode;
 import logic.Spreadsheet;
 import utils.Constants;
 
@@ -43,10 +45,11 @@ public abstract class FileBuilder {
   
     public String[][] getMatrixinfo() {
         String matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
-        
+        StrategyViewMode svm = new NormalViewMode();
           for(int i = 0; i < Constants.N_ROWS; i++){                           
             for(int j = 0; j < Constants.N_COLUMNS; j++){								
-            matrix[i][j] = Spreadsheet.getSpreadsheet().getMatrix()[i][j].getValue();
+            matrix[i][j] = svm.viewSpreadsheet()[i][j];
+            
             }
           }          
             
