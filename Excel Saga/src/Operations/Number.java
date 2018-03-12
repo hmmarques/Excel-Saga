@@ -24,7 +24,12 @@ public class Number extends FactoryCalculations{
             return "#ERROR";
         }
         if(value.isEmpty()){
-            return "#ERROR";
+            return String.valueOf("0");
+        }
+        if(value.size() == 1){
+            if(!verifyIsNumber(value.get(0))){
+                return String.valueOf("0");
+            }
         }
         return String.valueOf(Double.parseDouble(value.get(0)));
     

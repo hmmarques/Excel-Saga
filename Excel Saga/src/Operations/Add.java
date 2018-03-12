@@ -5,7 +5,7 @@
  */
 package Operations;
 
-import static ViewMode.NormalViewMode.verifyIsNumber;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,21 +19,22 @@ import utils.Position;
  */
 public class Add extends FactoryCalculations{
 
-    Map<String, Integer> charCoordinate;
+    //Map<String, Integer> charCoordinate;
     Spreadsheet spreadsheet;
 
     @Override
     String operations(ArrayList<String> value) {
-        charCoordinate = new HashMap<String, Integer>();
-        initializeCharCoordinate();
+        //charCoordinate = new HashMap<String, Integer>();
+        
         spreadsheet = Spreadsheet.getSpreadsheet();
         
         double res=0;
         
-        if (value.get(0).contains(":")) {
-            return verifyIfMultipleAddAndReturnValue(value.get(0));
-        } else {
-            
+        if (!value.isEmpty()) {
+            if (value.get(0).contains(":")) {
+                return verifyIfMultipleAddAndReturnValue(value.get(0));
+            } else {
+
                 for (int i = 0; i < value.size(); i++) {
                     if (value.get(i).isEmpty()) {
                         res += 0;
@@ -42,12 +43,13 @@ public class Add extends FactoryCalculations{
                     }
                 }
             }
+        }
         
         return String.valueOf(res);
     }
     
     public String verifyIfMultipleAddAndReturnValue(String cmd){
-        
+       // initializeCharCoordinate();
         int i = 0;
         String cmd1;
         String cmd2;
@@ -116,32 +118,5 @@ public class Add extends FactoryCalculations{
  
     }
     
-     public void initializeCharCoordinate(){
-        charCoordinate.put("A", 0);
-        charCoordinate.put("B", 1);
-        charCoordinate.put("C", 2);
-        charCoordinate.put("D", 3);
-        charCoordinate.put("E", 4);
-        charCoordinate.put("F", 5);
-        charCoordinate.put("G", 6);
-        charCoordinate.put("H", 7);
-        charCoordinate.put("I", 8);
-        charCoordinate.put("J", 9);
-        charCoordinate.put("K", 10);
-        charCoordinate.put("L", 11);
-        charCoordinate.put("M", 12);
-        charCoordinate.put("N", 13);
-        charCoordinate.put("O", 14);
-        charCoordinate.put("P", 15);
-        charCoordinate.put("Q", 16);
-        charCoordinate.put("R", 17);
-        charCoordinate.put("S", 18);
-        charCoordinate.put("T", 19);
-        charCoordinate.put("U", 20);
-        charCoordinate.put("W", 21);
-        charCoordinate.put("X", 22);
-        charCoordinate.put("Y", 23);
-        charCoordinate.put("Z", 24);
-    }
-    
+     
 }

@@ -18,18 +18,19 @@ public class Subtraction  extends FactoryCalculations{
     String operations(ArrayList<String> value) {
         double res=0;
         
-        for (int i = 0; i < value.size(); i++) {
-            if(value.get(i).isEmpty()){
-                res -= 0;
-            }else{
-                if(i==0){
-                    res = Double.parseDouble(value.get(i));
+        if (!value.isEmpty()) {
+            for (int i = 0; i < value.size(); i++) {
+                if(value.get(i).isEmpty()){
+                    res -= 0;
                 }else{
-                    res -= Double.parseDouble(value.get(i));
-                }      
+                    if(i==0){
+                        res = Double.parseDouble(value.get(i));
+                    }else{
+                        res -= Double.parseDouble(value.get(i));
+                    }      
+                }
             }
         }
-        
         return String.valueOf(res);
     }
     
