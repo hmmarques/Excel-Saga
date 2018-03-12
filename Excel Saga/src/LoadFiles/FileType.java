@@ -29,8 +29,6 @@ public abstract class FileType {
         }
 
         switch (extension) {
-            case "xml":
-                return new XMLFile();
             case "csv":
                 return new CSVFile();
             case "html":
