@@ -19,15 +19,18 @@ public class Multiple extends FactoryCalculations{
     String operations(ArrayList<String> value) {
         double res=1;
         
-        for (int i = 0; i < value.size(); i++) {
-            if(value.get(i).isEmpty()){
-                res *= 1;
-            }else{
-                res *= Integer.parseInt(value.get(i));  
+        if (!value.isEmpty()) {
+            for (int i = 0; i < value.size(); i++) {
+                if(value.get(i).isEmpty()){
+                    res *= 1;
+                }else{
+                    res *= Integer.parseInt(value.get(i));  
+                }
+
             }
-            
+        }else{
+            res = 0;
         }
-        
         return String.valueOf(res);
     }
     
