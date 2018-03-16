@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import Controller.Controller;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import utils.Constants;
@@ -40,6 +41,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
         cmdAux = "";
         controlTxtAreaform = true;
         initComponents();
+
         controller = new Controller();
         JRNormal.setSelected(true);
 
@@ -175,9 +177,6 @@ public class InterfaceSheet extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TxtAreaform = new javax.swing.JTextArea();
-        BTNcsv = new javax.swing.JButton();
-        BTNxml = new javax.swing.JButton();
-        BTNhtml = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
@@ -269,34 +268,6 @@ public class InterfaceSheet extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(TxtAreaform);
-
-        BTNcsv.setText("CSV");
-        BTNcsv.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BTNcsvMouseClicked(evt);
-            }
-        });
-        BTNcsv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BTNcsvActionPerformed(evt);
-            }
-        });
-
-        BTNxml.setText("XML");
-        BTNxml.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BTNxmlMouseClicked(evt);
-            }
-        });
-
-        BTNhtml.setText("HTML");
-        BTNhtml.setMaximumSize(new java.awt.Dimension(51, 23));
-        BTNhtml.setMinimumSize(new java.awt.Dimension(51, 23));
-        BTNhtml.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BTNhtmlMouseClicked(evt);
-            }
-        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -522,12 +493,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
                                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(29, 29, 29)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(BTNcsv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BTNxml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BTNhtml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(BTNsaveFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(BTNchooseFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -539,13 +505,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BTNcsv)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTNxml)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BTNhtml, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BTNsaveFile))
+                        .addGap(64, 64, 64)
+                        .addComponent(BTNsaveFile)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BTNchooseFile))
                     .addGroup(layout.createSequentialGroup()
@@ -672,23 +633,11 @@ public class InterfaceSheet extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JRNegativeMouseClicked
 
-    private void BTNxmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNxmlMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BTNxmlMouseClicked
-
     private void BTNchooseFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNchooseFileMouseClicked
 
         ChooseFile face = new ChooseFile(this);
         face.setVisible(true);
     }//GEN-LAST:event_BTNchooseFileMouseClicked
-
-    private void BTNhtmlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNhtmlMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BTNhtmlMouseClicked
-
-    private void BTNcsvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNcsvMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BTNcsvMouseClicked
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
@@ -782,20 +731,17 @@ public class InterfaceSheet extends javax.swing.JFrame {
         updateTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void BTNcsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcsvActionPerformed
-        controller.export("csv");
-    }//GEN-LAST:event_BTNcsvActionPerformed
-
     private void BTNsaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNsaveFileActionPerformed
-        controller.export("bin");
+       
+    
     }//GEN-LAST:event_BTNsaveFileActionPerformed
 
     private void BTNsaveFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNsaveFileMouseClicked
         // TODO add your handling code here:
         
-        SaveFile face = new SaveFile(this);
-        face.setVisible(true);        
-        
+        SaveFile face = new SaveFile(this);        
+        face.setVisible(true);  
+               
     }//GEN-LAST:event_BTNsaveFileMouseClicked
 
     /**
@@ -836,10 +782,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNchooseFile;
-    private javax.swing.JButton BTNcsv;
-    private javax.swing.JButton BTNhtml;
     private javax.swing.JButton BTNsaveFile;
-    private javax.swing.JButton BTNxml;
     private javax.swing.JButton BtnApplyFilters;
     private javax.swing.JCheckBox JCBUppercase;
     private javax.swing.JRadioButton JRFunctional;

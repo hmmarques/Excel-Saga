@@ -5,11 +5,12 @@
  */
 package InterfacePackage;
 
-import LoadFiles.FileAdapter;
-import LoadFiles.SagaFile;
 import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 /**
  *
@@ -20,11 +21,31 @@ public class SaveFile extends javax.swing.JFrame {
     /**
      * Creates new form SaveFile
      */
+    FileFilter bin = new FileNameExtensionFilter("BIN file(.bin)", "bin");
+    FileFilter html = new FileNameExtensionFilter("HTML file(.html)", "html");
+    FileFilter xml = new FileNameExtensionFilter("XML file(.xml)", "xml");
+    FileFilter csv = new FileNameExtensionFilter("CSV file(.csv)", "csv");
+    
     InterfaceSheet is;
-            
+
+
     public SaveFile(InterfaceSheet is) {
         this.is = is;
-        initComponents();
+        initComponents();  
+        
+        jFileSave.addChoosableFileFilter(bin);
+        jFileSave.addChoosableFileFilter(html);
+        jFileSave.addChoosableFileFilter(xml);
+        jFileSave.addChoosableFileFilter(csv);
+        
+        jFileSave.setFileFilter(bin);
+        jFileSave.setAcceptAllFileFilterUsed(false);
+        jFileSave.setMultiSelectionEnabled(false);
+       
+         UIManager.put("FileChooser.filesOfTypeLabelText", "Extension");
+         UIManager.put("FileChooser.lookInLabelText", "Save In");
+         //UIManager.put("FileChooser.openDialogTitleText", "SAVE");
+         SwingUtilities.updateComponentTreeUI(jFileSave);
     }
 
     /**
@@ -70,9 +91,15 @@ public class SaveFile extends javax.swing.JFrame {
         
         if (evt.getActionCommand().equals(javax.swing.JFileChooser.APPROVE_SELECTION)) {
             
-            System.out.println("Save File");
             File fileToSave = jFileSave.getSelectedFile();
-            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            FileFilter choosedFilter = jFileSave.getFileFilter();
+            
+            String ext = ((FileNameExtensionFilter) choosedFilter).getExtensions()[0];
+            //caminho do ficheiro que esta no pc sem extenção
+            String full_name = fileToSave.getAbsolutePath();
+            
+            System.out.println("save file:" + full_name + "  ---   com extençao: " + ext);
+            is.controller.export(full_name,ext);
 
         } else if (evt.getActionCommand().equals(javax.swing.JFileChooser.CANCEL_SELECTION)) {
             System.out.println("Close");
@@ -115,7 +142,8 @@ public class SaveFile extends javax.swing.JFrame {
             }
         });
     }
-
+    
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileSave;
     // End of variables declaration//GEN-END:variables

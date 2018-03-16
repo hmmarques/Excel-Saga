@@ -28,19 +28,17 @@ public class BINBuilder extends FileBuilder {
         String aux_Matrix[][] = getMatrixinfo();
 
         try {
-            FileOutputStream fos = new FileOutputStream(name + extension);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            oos.writeObject(Constants.CODE);
-
-            for (int i = 0; i < Constants.N_ROWS; i++) {
-                for (int j = 0; j < Constants.N_COLUMNS; j++) {
-                    oos.writeObject(aux_Matrix[i][j]);
+            try (FileOutputStream fos = new FileOutputStream(name + extension); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                
+                oos.writeObject(Constants.CODE);
+                
+                for (int i = 0; i < Constants.N_ROWS; i++) {
+                    for (int j = 0; j < Constants.N_COLUMNS; j++) {
+                        oos.writeObject(aux_Matrix[i][j]);
+                    }
                 }
+                
             }
-
-            oos.close();
-            fos.close();
 
         } catch (FileNotFoundException e) {
             //e.printStackTrace();

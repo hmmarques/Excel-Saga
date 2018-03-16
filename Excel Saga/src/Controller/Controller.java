@@ -48,10 +48,12 @@ public class Controller {
 
     ;
     
-    public void export(String extension) {
+    public void export(String name, String extension) {
        
+        
+        
         FileBuilder fb = FileBuilder.getBuilder(extension);
-        fb.setName("TEMP");      
+        fb.setName(name);      
         fb.buildFile();
         
     }
