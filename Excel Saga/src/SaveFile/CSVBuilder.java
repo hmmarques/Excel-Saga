@@ -51,7 +51,7 @@ public class CSVBuilder extends FileBuilder {
                         fileWriter.append(aux_Matrix[i][y]);
                     } else {
                         fileWriter.append(DELIMITER);
-                        fileWriter.append(aux_Matrix[i][y]);
+                        fileWriter.append(aux_Matrix[i][y] == null ? "" : aux_Matrix[i][y] );
                     }
                 }
             }

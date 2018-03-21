@@ -16,7 +16,12 @@ import ViewMode.NormalViewMode;
 import ViewMode.StrategyViewMode;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import logic.Spreadsheet;
+import persistence.Document;
+import persistence.Session;
+import persistence.UnitOfWork;
+import persistence.User;
 import utils.Constants;
 import utils.Constants.Filter;
 import utils.Position;
@@ -49,13 +54,13 @@ public class Controller {
     ;
     
     public void export(String name, String extension) {
-       
-        
-        
+
         FileBuilder fb = FileBuilder.getBuilder(extension);
-        fb.setName(name);      
+        fb.setName(name);
         fb.buildFile();
-        
+        Document d = new Document(name + "." + extension);
+        UnitOfWork work = Session.getSession().getUnitOfWork();
+        work.commit();
     }
 
     public void setCellValue(int column, int row, String value) {
@@ -79,16 +84,16 @@ public class Controller {
     public String[][] getMatrix() {
         return s.viewSpreadsheet();
     }
-    
-    public void setView(String view){
-        
-        if(view.equals("normal")){
+
+    public void setView(String view) {
+
+        if (view.equals("normal")) {
             s = new NormalViewMode();
-        }
-        else{
+        } else {
             s = new FunctionalViewMode();
         }
     }
+
     public ArrayList<utils.Filter> getFilters(Position p) {
         return spreadsheet.getFilters(p);
     }
@@ -109,7 +114,36 @@ public class Controller {
     public String getCellValue(Position position) {
         return spreadsheet.getCellValue(position);
     }
-    
-    
+
+    public void setUser(String username) {
+        spreadsheet.setUser(username);
+    }
+
+    public ArrayList<String> getFiles(String name) {
+
+        ArrayList<String> d = new ArrayList<>();
+        User user = User.load(name);
+
+        if (user == null) {
+            User u = new User(name);
+            UnitOfWork work = Session.getSession().getUnitOfWork();
+            work.commit();
+            return d;
+        }
+
+        ArrayList<Document> docs = Document.load(User.getID());
+
+        for (Document doc : docs) {
+            d.add(doc.getName());
+        }
+
+        return d;
+    }
+
+    public void loadSheet(String file) {
+        File f = new File(file);
+        SagaFile sf = new FileAdapter();
+        sf.readFile(f);
+    }
 
 }

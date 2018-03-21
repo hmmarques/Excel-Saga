@@ -6,6 +6,7 @@
 package logic;
 
 import java.util.ArrayList;
+import persistence.User;
 import utils.*;
 
 /**
@@ -18,6 +19,7 @@ public class Spreadsheet {
     ArrayList<Filter>[][] MatrixFilters = new ArrayList[Constants.N_ROWS][Constants.N_COLUMNS];
     static Spreadsheet ss;
     boolean addToFilterArrayList = true;
+    String username;
 
     public Spreadsheet() {
         for (int i = 0; i < Constants.N_ROWS; i++) {
@@ -26,6 +28,7 @@ public class Spreadsheet {
                 MatrixFilters[i][j] = new ArrayList<>();
             }
         }
+        this.username = "";
     }
 
     public static Spreadsheet getSpreadsheet() {
@@ -126,5 +129,9 @@ public class Spreadsheet {
 
     public String getCellValue(Position position) {
         return getCell(position).getValue();
+    }
+
+    public void setUser(String username) {
+        this.username = username;
     }
 }

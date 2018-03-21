@@ -17,6 +17,12 @@ public class User implements Persistency{
         UnitOfWork work = Session.getSession().getUnitOfWork();
         work.registerNew(this);
     }
+    
+    public User(String name, int n)
+    {
+        this.name = name;
+        persisted = true;
+    }
 
     public String getName() {
         return name;
@@ -63,10 +69,10 @@ public class User implements Persistency{
         }
     }
 
-    public static User load(Integer code)
+    public static User load(String name)
     {
         User p = null;
-        String query = "select * from USERS where id = " + code.toString();
+        String query = "select * from USERS where name = '" + name + "'";
 
         try
         {
@@ -76,7 +82,8 @@ public class User implements Persistency{
 
             while (rs.next())
             {
-                p = new User(rs.getString("name"));
+                p = new User(rs.getString("name"),1);
+                p.id = rs.getInt("id");
                 p.persisted = true;
             }
         } catch (SQLException e )

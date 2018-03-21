@@ -10,21 +10,24 @@ import java.util.ArrayList;
 public class Document implements Persistency{
     
     String name;
-    String location;
-    Double filesize;
     Integer id;
     boolean persisted;
     
     
-    public Document(String name,  String location, Double filesize )
+    public Document(String name)
     {
         this.name = name;
-        this.location = location;
-        this.filesize = filesize;
         
         persisted = false;
         UnitOfWork work = Session.getSession().getUnitOfWork();
         work.registerNew(this);
+    }
+    
+    public Document(String name, int n)
+    {
+        this.name = name;
+        
+        persisted = true;
     }
 
     public String getName() {
@@ -35,22 +38,6 @@ public class Document implements Persistency{
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Double getFilesize() {
-        return filesize;
-    }
-
-    public void setFilesize(Double filesize) {
-        this.filesize = filesize;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -59,14 +46,12 @@ public class Document implements Persistency{
     public void create()
     {
         try
-        {                  
-            PreparedStatement pstatement = Session.getSession().getConnection().prepareStatement("insert into DOCUMENTS (userID, name, location, filesize) values (?, ? ,?, ?)"
+        {   
+            PreparedStatement pstatement = Session.getSession().getConnection().prepareStatement("insert into DOCUMENTS (id, userID, name) values (1,?, ?)"
                                                                                                     , Statement.RETURN_GENERATED_KEYS);
             pstatement.setQueryTimeout(30);
             pstatement.setInt(1, User.getID());
             pstatement.setString(2, this.name);
-            pstatement.setString(3, this.location);
-            pstatement.setDouble(4, this.filesize);
             
             pstatement.execute();
 
@@ -98,7 +83,7 @@ public class Document implements Persistency{
 
             while (rs.next())
             {
-                Document doc = new Document(rs.getString("name"), rs.getString("location"), rs.getDouble("filesize"));
+                Document doc = new Document(rs.getString("name"),1);
                 
                 doc.persisted = true;
                 
@@ -116,7 +101,7 @@ public class Document implements Persistency{
     @Override
     public void update()
     {
-        String query = "update DOCUMENTS set name = ?,  location = ? , filesize= ? where id = ?";
+        String query = "update DOCUMENTS set name = ? where id = ?";
 
         try
         {
@@ -124,9 +109,7 @@ public class Document implements Persistency{
             pstatement.setQueryTimeout(30);
 
             pstatement.setString(1, this.name);
-            pstatement.setString(2, this.location);
-            pstatement.setDouble(3, this.filesize);
-            pstatement.setInt(4, this.id.intValue());
+            pstatement.setInt(2, this.id.intValue());
 
             pstatement.executeUpdate();
 

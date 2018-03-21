@@ -5,8 +5,17 @@
  */
 package InterfacePackage;
 
+import Controller.Controller;
+import LoadFiles.FileAdapter;
+import LoadFiles.SagaFile;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *
@@ -18,12 +27,14 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     public boolean loginAccept;
+    Controller controller;
+    ArrayList<String> files = new ArrayList<>();
 
-    
     public Login() {
-        
+
+        controller = new Controller();
         initComponents();
-        
+
     }
 
     /**
@@ -36,10 +47,31 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jLogin = new javax.swing.JButton();
+        jLogin1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLogin1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLogin1.setText("Open");
+        jLogin1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLogin1MouseClicked(evt);
+            }
+        });
+        jLogin1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLogin1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel1.setText("Username");
+
+        jScrollPane1.setViewportView(jList1);
 
         jLogin.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLogin.setText("Login");
@@ -54,34 +86,43 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel1.setText("Username");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(95, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
             .addGroup(layout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addComponent(jLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 68, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(68, 68, 68))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
+                .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                     .addComponent(jTextField1))
-                .addGap(18, 18, 18)
-                .addComponent(jLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -94,15 +135,36 @@ public class Login extends javax.swing.JFrame {
     private void jLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginMouseClicked
         // TODO add your handling code here:
 
-        this.loginAccept = true;//metodo para validar user 
-        if(this.loginAccept){
-            InterfaceSheet face = new InterfaceSheet();
-            face.show();
+        controller.setUser(jTextField1.getText());
+        DefaultListModel demoList = new DefaultListModel();
+        files.clear();
+        files = controller.getFiles(jTextField1.getText());
+        for (String entry : files) {
+            demoList.addElement(entry);
         }
-        this.setVisible(false);
-        //this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-        
+        jList1.setModel(demoList);
+
     }//GEN-LAST:event_jLoginMouseClicked
+
+    private void jLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLogin1ActionPerformed
+        
+    }//GEN-LAST:event_jLogin1ActionPerformed
+
+    private void jLogin1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLogin1MouseClicked
+
+        if(jTextField1.getText().equals("")){
+            return;
+        }
+        
+        String file = jList1.getSelectedValue();
+        
+        if(file != null && !file.equals(""))
+            controller.loadSheet(file);
+        
+        InterfaceSheet face = new InterfaceSheet();
+        face.show();
+        this.setVisible(false);
+    }//GEN-LAST:event_jLogin1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -113,7 +175,7 @@ public class Login extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -138,9 +200,9 @@ public class Login extends javax.swing.JFrame {
                 new Login().setVisible(true);
             }
         });
-        
+
         System.out.println("jooooo");
-        
+
     }
 
     public boolean isLoginAccept() {
@@ -152,7 +214,10 @@ public class Login extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JButton jLogin;
+    private javax.swing.JButton jLogin1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

@@ -106,6 +106,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
         });
 
+        updateTable();
     }
 
     public void updateTable() {
