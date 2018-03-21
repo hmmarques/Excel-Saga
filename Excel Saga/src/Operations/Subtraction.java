@@ -24,9 +24,17 @@ public class Subtraction  extends FactoryCalculations{
                     res -= 0;
                 }else{
                     if(i==0){
-                        res = Double.parseDouble(value.get(i));
+                        if(verifyIsNumber(value.get(i))){
+                            res = Double.parseDouble(value.get(i));
+                        }else{
+                            res+=0;
+                        }  
                     }else{
-                        res -= Double.parseDouble(value.get(i));
+                        if(verifyIsNumber(value.get(i))){
+                            res -= Double.parseDouble(value.get(i));
+                        }else{
+                            res+=0;
+                        } 
                     }      
                 }
             }

@@ -39,7 +39,11 @@ public class Add extends FactoryCalculations{
                     if (value.get(i).isEmpty()) {
                         res += 0;
                     } else {
-                        res += Double.parseDouble(value.get(i));
+                        if(verifyIsNumber(value.get(i))){
+                            res += Double.parseDouble(value.get(i));
+                        }else{
+                            res+=0;
+                        }
                     }
                 }
             }
