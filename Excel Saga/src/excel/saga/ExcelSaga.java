@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import persistence.Session;
 
-
 /**
  *
  * @author henriquemarques
@@ -24,7 +23,6 @@ public class ExcelSaga {
      */
     public static void main(String[] args) {
 
-        
         Session session = Session.getSession();
         Connection connection = session.getConnection();
 
@@ -33,22 +31,21 @@ public class ExcelSaga {
         try {
             statement = connection.createStatement();
             statement.setQueryTimeout(30);
+
             /*statement.executeUpdate("drop table if exists Users");
+            statement.executeUpdate("drop table if exists Documents");*/
             statement.executeUpdate("create table USERS (id integer auto_increment, name varchar(50))");
-            statement.executeUpdate("drop table if exists Documents");
             statement.executeUpdate("create table DOCUMENTS (id integer auto_increment, userID integer , name varchar(50))");
-            statement.executeUpdate("insert into USERS VALUES(1,'H')");
-            statement.executeUpdate("insert into DOCUMENTS VALUES(1,1,'DOC_TESTE')");*/
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
-        
-        
+
         boolean aux = false;
-        
+
         Login login = new Login();
         login.show();
-            
+
     }
-    
+
 }
