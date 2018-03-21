@@ -133,7 +133,7 @@ public abstract class FactoryCalculations {
             for (int j = 0; j < valuescoordinates.size(); j++) {
 
                 if(verifyIsNumber(valuescoordinates.get(j))){
-                    values.add(values.get(j));
+                    values.add(valuescoordinates.get(j));
                 } else if (verifyIfFunction(valueOfCoordinate(valuescoordinates.get(j)))) {
                     ii = 0;
                     System.out.println("value: " + valuescoordinates.get(j));
