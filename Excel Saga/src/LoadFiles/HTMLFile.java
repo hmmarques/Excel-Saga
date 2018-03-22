@@ -8,7 +8,6 @@ package LoadFiles;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import logic.Spreadsheet;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
