@@ -32,7 +32,7 @@ public class HTMLBuilder extends FileBuilder{
 
     @Override
     public void buildFile() {
-        System.out.println("build file (HTML)");
+        
 
         String aux_Matrix[][] = getMatrixinfo();
         if (aux_Matrix == null) {
@@ -40,7 +40,7 @@ public class HTMLBuilder extends FileBuilder{
             return;
         }
         try {
-            System.out.println("Building the html file !!!");
+            System.out.println("build file (HTML)");
             fileWriter = new FileWriter(name + extension);
 
             //Write the HTML file header
@@ -56,7 +56,13 @@ public class HTMLBuilder extends FileBuilder{
 
                 for (int y = 0; y < Constants.N_COLUMNS; y++) {
                     fileWriter.append(OPEN_TAG_TD);
+                    
+                    if(aux_Matrix[i][y] == null){
+                    fileWriter.append("");
+                    }else{
                     fileWriter.append(aux_Matrix[i][y]);
+                    }
+                    
                     fileWriter.append(CLOSE_TAG_TD);
                     fileWriter.append(NEW_LINE_SEPARATOR);
 

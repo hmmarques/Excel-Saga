@@ -41,7 +41,7 @@ public class HTMLFile extends FileType {
                 ++n_linha;
                 Element row = rows.get(i-1);
                 Elements cols = row.select("td");
-                System.out.println("i= " + cols.size());
+              //  System.out.println("i= " + cols.size());
               
                 if (!Verify_Cols(cols.size())) {
                     //erro o ficheiro não é suportado
@@ -62,8 +62,8 @@ public class HTMLFile extends FileType {
             } else {
 
                 Spreadsheet sp = Spreadsheet.getSpreadsheet();
-
                 sp.setMatriz(Matrix);
+                System.out.println("HTML file was loaded successfully !!!");
             }
 
         } else {

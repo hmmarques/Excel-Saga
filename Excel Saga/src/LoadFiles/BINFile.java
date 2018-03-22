@@ -21,6 +21,7 @@ public class BINFile extends FileType{
 
     @Override
     public void readFileType(File f) {
+        System.out.println("read BINFile !");
         String aux_matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
         try {
 
@@ -41,6 +42,7 @@ public class BINFile extends FileType{
             if (validate.equals(Constants.CODE)) {
                 Spreadsheet sp = Spreadsheet.getSpreadsheet();
                 sp.setMatriz(aux_matrix);
+                System.out.println("BIN file was loaded successfully !!!");
             } else {
                 System.out.println("File .bin not allowed");
             }

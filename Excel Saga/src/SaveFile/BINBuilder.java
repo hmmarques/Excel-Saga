@@ -37,7 +37,7 @@ public class BINBuilder extends FileBuilder {
                         oos.writeObject(aux_Matrix[i][j]);
                     }
                 }
-                
+                 System.out.println("BIN file was created successfully !!!");
             }
 
         } catch (FileNotFoundException e) {

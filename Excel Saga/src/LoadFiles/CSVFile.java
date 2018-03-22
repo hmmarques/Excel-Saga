@@ -33,7 +33,7 @@ public class CSVFile extends FileType {
                 ++n_linha;
 
                 String linha = sc.nextLine();
-                System.out.println(linha);
+                //System.out.println(linha);
 
                 String[] parts = linha.split(";");
 
@@ -58,6 +58,7 @@ public class CSVFile extends FileType {
 
                 Spreadsheet sp = Spreadsheet.getSpreadsheet();
                 sp.setMatriz(Matrix);
+                System.out.println("CSV file was loaded successfully !!!");
             }
 
         } else {

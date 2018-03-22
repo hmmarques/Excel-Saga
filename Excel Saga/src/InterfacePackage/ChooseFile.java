@@ -74,10 +74,10 @@ public class ChooseFile extends javax.swing.JFrame {
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
 
         if (evt.getActionCommand().equals(javax.swing.JFileChooser.APPROVE_SELECTION)) {
-            System.out.println("Read File");
+            //System.out.println("Read File");
 
             File file = jFileChooser1.getSelectedFile();
-            System.out.println(file.getName());
+            //System.out.println(file.getName());
 
             SagaFile sf = new FileAdapter();
             sf.readFile(file);
