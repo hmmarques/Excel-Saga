@@ -29,32 +29,28 @@ public class HTMLFile extends FileType {
         String Matrix[][] = new String[Constants.N_ROWS][Constants.N_COLUMNS];
 
         int n_linha = 0;
-        int n_col;
+       
 
         if (f.exists()) {
             Document doc = Jsoup.parse(f, "UTF-8");
 
-            ArrayList<String> downServers = new ArrayList<>();
             Element table = doc.select("table").get(0); //select the first table.
             Elements rows = table.select("tr");
 
             for (int i = 1; i < rows.size(); i++) {
                 ++n_linha;
-                Element row = rows.get(i);
+                Element row = rows.get(i-1);
                 Elements cols = row.select("td");
-                System.out.println("i=" + i + row.text());
-
-                String[] values = row.text().split(" ");
-                n_col = values.length;
-
-                if (!Verify_Cols(n_col)) {
+                System.out.println("i= " + cols.size());
+              
+                if (!Verify_Cols(cols.size())) {
                     //erro o ficheiro não é suportado
-                    System.out.println("Nº of colums not allowed - " + n_col + " _ max:" + Constants.N_COLUMNS);
+                    System.out.println("Nº of colums not allowed - " + cols.size() + " _ max:" + Constants.N_COLUMNS);
                     return;
                 }
 
-                for (int j = 0; n_col > j; j++) {
-                    Matrix[n_linha - 1][j] = values[j];
+                for (int j = 0; cols.size() > j; j++) {
+                    Matrix[i-1][j] = row.select("td").get(j).text();
                 }
 
             }
