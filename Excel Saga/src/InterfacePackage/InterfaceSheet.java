@@ -47,8 +47,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
 
         jTable1.getModel().addTableModelListener((e) -> {
             if (!overlookTableListener) {
-                System.out.println("row-> " + row + "  Column->" + column);
-                System.out.println("rowAux-> " + rowAux + "  ColumnAux->" + columnAux);
+                /*System.out.println("row-> " + row + "  Column->" + column);
+                System.out.println("rowAux-> " + rowAux + "  ColumnAux->" + columnAux);*/
                 controller.setCellValue(column, row, jTable1.getModel().getValueAt(row, column).toString());
                 TxtAreaform.setText(jTable1.getModel().getValueAt(row, column).toString());
                 overlookTableListener = true;
@@ -56,7 +56,7 @@ public class InterfaceSheet extends javax.swing.JFrame {
                 this.updateTable();
             }
             overlookTableListener = false;
-            
+
         });
 
         TxtAreaform.getDocument().addDocumentListener(new DocumentListener() {
@@ -131,7 +131,6 @@ public class InterfaceSheet extends javax.swing.JFrame {
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
-        
 
         for (utils.Filter f : filters) {
             switch (f.getFilter()) {
@@ -663,8 +662,14 @@ public class InterfaceSheet extends javax.swing.JFrame {
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String teste = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
-            //JOptionPane.showMessageDialog(null, teste);
+            row = jTable1.getSelectedRow();
+            column = jTable1.getSelectedColumn();
+
+            controlTxtAreaform = false;
+            TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+            controlTxtAreaform = true;
+
+            updateFilters();
 
         }
 
@@ -674,12 +679,12 @@ public class InterfaceSheet extends javax.swing.JFrame {
     private void TxtAreaformFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TxtAreaformFocusLost
         // TODO add your handling code here:
         // controlTxtAreaform = true;
-        System.out.println("row: " + row);
+        /*System.out.println("row: " + row);
         System.out.println("column:" + column);
         System.out.println("rowAux: " + rowAux);
         System.out.println("columnAux: " + columnAux);
         System.out.println("re: " + cmdAux);
-        System.out.println("re:" + jTable1.getModel().getValueAt(rowAux, columnAux).toString());
+        System.out.println("re:" + jTable1.getModel().getValueAt(rowAux, columnAux).toString());*/
         if (insertedTextOnTxtArea) {
             controller.setCellValue(columnAux, rowAux, cmdAux);
             insertedTextOnTxtArea = false;
@@ -713,8 +718,8 @@ public class InterfaceSheet extends javax.swing.JFrame {
         TxtAreaform.setText((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
         controlTxtAreaform = true;
 
-        System.out.println("row-> " + row + "  Column->" + column);
-        System.out.println("rowAux-> " + rowAux + "  ColumnAux->" + columnAux);
+        /*System.out.println("row-> " + row + "  Column->" + column);
+        System.out.println("rowAux-> " + rowAux + "  ColumnAux->" + columnAux);*/
         updateFilters();
     }//GEN-LAST:event_jTable1MousePressed
 
@@ -733,16 +738,16 @@ public class InterfaceSheet extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BTNsaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNsaveFileActionPerformed
-       
-    
+
+
     }//GEN-LAST:event_BTNsaveFileActionPerformed
 
     private void BTNsaveFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNsaveFileMouseClicked
         // TODO add your handling code here:
-        
-        SaveFile face = new SaveFile(this);        
-        face.setVisible(true);  
-               
+
+        SaveFile face = new SaveFile(this);
+        face.setVisible(true);
+
     }//GEN-LAST:event_BTNsaveFileMouseClicked
 
     /**
