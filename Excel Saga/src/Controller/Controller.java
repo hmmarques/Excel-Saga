@@ -16,11 +16,13 @@ import ViewMode.NormalViewMode;
 import ViewMode.StrategyViewMode;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import logic.Spreadsheet;
 import persistence.Document;
 import persistence.Session;
 import persistence.UnitOfWork;
 import persistence.User;
+import utils.Constants;
 import utils.Constants.Filter;
 import utils.Position;
 

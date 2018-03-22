@@ -8,6 +8,8 @@ package InterfacePackage;
 import LoadFiles.FileAdapter;
 import LoadFiles.SagaFile;
 import java.io.File;
+import logic.Spreadsheet;
+import utils.Position;
 
 /**
  *

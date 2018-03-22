@@ -28,13 +28,16 @@ public class EditCell implements Command{
     
     @Override
     public void Do() {
-    
+         System.out.println("passei no DOOOO da editCell");
+         
+         System.out.println("recebi: " + originalvalue);
          Spreadsheet.getSpreadsheet().setCellValue(p,value);
     }
 
     @Override
     public void Undo() {
-  
+        System.out.println("passei no undo da editCell");
+       // Spreadsheet.getSpreadsheet().getCell(p).setValue(originalvalue);
        Spreadsheet.getSpreadsheet().setCellValue(p, originalvalue);
     }
     
